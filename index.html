@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wasreb</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js" defer></script>
+    <!-- Map Scripts -->
+    <script src="./script/circular-progress.js" defer type="module"></script>
+	<link rel="stylesheet" href="https://openlayers.org/en/v6.2.1/css/ol.css" type="text/css">
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="https://openlayers.org/en/latest/legacy/ol.css" />
+    <!-- ol-ext -->
+    <link rel="stylesheet" href="./dist/ol-ext.min.css" />
+    <style>
+        .tooltip {
+            position: relative;
+            padding: 3px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            opacity: 0.7;
+            white-space: nowrap;
+            font: 10pt sans-serif;
+            }
+        #map {
+          width: 100%;
+          height: 1050px;
+        }
+        #kpi_list { cursor: pointer; }
+        #layer_info_table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        #layer_info_table td, #layer_info_table th {
+        border: 1px solid #ddd;
+        padding: 5px;
+        max-width:100% !important;
+        white-space:nowrap !important;
+        }
+
+        #layer_info_table tr:nth-child(even){background-color: #f2f2f2;}
+
+        #layer_info_table tr:hover {background-color: #ddd;}
+
+        #layer_info_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+        }
+     </style>
+  </head>
+    <body class="font-body min-h-screen flex flex-col justify-center align-middle">
+        <header class="border-b border-slate-300">
+            <div class="container mx-auto py-6 flex justify-between">
+                <div class="basis-3/10"><img src="./img/wasreb-logo.png" class="h-12"></div>
+
+                <div class="basis-7/10 flex justify-end">
+                    <div class="basis-1/4 mr-2 flex justify-end">
+                        <input placeholder="Search/Filter ..." type="search" name="search" id="main-search">
+                    </div>
+                    <nav class="basis1/2">
+                        <ul class="m-0 p-0 list-none bg-slate-800 text-slate-100 uppercase rounded-md overflow-hidden mt-2">
+                            <li class="inline-block py-2.5 px-12 bg-slate-700 hover:bg-slate-600 transition ease-in-out text-sm font-medium cursor-pointer" data-modal-toggle="request-for-data-modal">
+                                Request for data
+                            </li>
+                            <li class="inline-block py-2.5 px-6 text-sm font-medium bg-slate-800 hover:bg-slate-600 transition ease-in-out cursor-pointer" data-modal-toggle="contact-us-modal">
+                                Contact Us
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+               
+            </div>
+
+           
+        </header>
+        <main class="flex-grow relative">
+            <div class="w-full" style="position: relative !important;">
+             <div id="map" style="text-transform: capitalize; position: absolute !important;">
+                <div class="legend_introduction_kpi" style="margin-bottom:190px !important; width: 250px; border-radius: 6px 6px 6px 6px; background-color: #FFFFFF; margin-right: 0px !important; margin-bottom: 640px !important; float:right; bottom: 0; right: 0; z-index: 10 !important; position: absolute !important; ">
+                  <h6 class="text-center"><b><span id="legend-title"></span>&nbsp;Legend</b></h6>
+                  <br>
+                  <div id="legend" class="text-center w-100 mr-5">
+                    <i style="font-size: 12px;"><b>No Layers selected</b><br> Check or uncheck layers on the left</i>
+                  </div>
+                        
+                </div>
+
+                 <div class="legend_introduction_wusa" style="text-transform: capitalize; margin-bottom:190px !important; width: 250px; border-radius: 6px 6px 6px 6px; background-color: #FFFFFF; margin-left: 10px !important; margin-bottom: 540px !important; float:left; bottom: 0; left: 0; z-index: 10 !important; position: absolute !important; ">
+                    <div class="text-left "><span id="tooltip_county"></span><br><span id="tooltip_kpi"></span></div>
+                    <br><hr>
+                     <h6 class="text-left"><b><span id="legend-title_kpi"></span>&nbsp;Map Legend</b></h6>
+                    <br>
+                    <div id="legend_kpi" style="text-transform: capitalize;" class="text-sm text-left w-100 mr-5">
+                        <i style="font-size: 12px;">Select KPI on the right panel</i>
+                    </div>
+                          
+                </div>
+                <div id="tooltip" class="tooltip"></div>
+            </div>
+                
+            </div>
+            <nav id="layers"  style="margin-top: 15px;" class="z-40 w-[18rem] absolute top-12 mr-4 left-0 bg-slate-700/95 py-1 px-1 rounded-r-md border-t border-r border-b border-slate-200 shadow-md">
+                <div id="layers-toggle" class="cursor-pointer show">
+                    <div class="flex justify-between mt-1">
+                        <div class="flex justify-start">
+                            <div class="mr-4">
+                                <svg class="h-5 w-5 text-slate-200" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 384 384"
+                                    style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                                    <style type="text/css">
+                                        .st0 {
+                                            fill: #FFFFFF;
+                                        }
+                                    </style>
+                                    <g>
+                                        <path class="st0"
+                                            d="M0,129.7c0-4,0-8,0-12c0.2-0.5,0.5-0.9,0.6-1.4c2.9-17.8,12.8-30.4,28.7-38.8C66.6,58,103.7,37.9,141.2,18.5
+                                                            		c32.6-17,65.9-17.5,99-1.3C253.6,23.7,266.7,31,280,38c25.4,13.4,50.8,26.8,76.1,40.3c13.2,7,21.9,17.5,26,31.8
+                                                            		c0.7,2.5,1.2,5.1,1.9,7.6c0,4,0,8,0,12c-0.2,0.3-0.5,0.6-0.5,1c-2.9,18.3-13.2,30.9-29.4,39.5c-36.4,19.3-72.6,38.9-108.9,58.4
+                                                            		c-34,18.2-68.6,19.4-103,1.6c-39.1-20.3-77.8-41.4-116.5-62.4c-12.2-6.6-20-17.1-23.8-30.4C1.2,134.8,0.6,132.3,0,129.7z
+                                                            		 M192.4,212.6c12.7,0.1,25-3.2,36.5-9.4c37.6-20.2,75.2-40.4,112.8-60.5c7.7-4.1,12.2-10.3,12.1-19.2c0-8.7-4.4-14.8-12.1-18.8
+                                                            		c-38.1-20.1-76-40.5-114.2-60.3c-23.9-12.4-48.3-12-72.2,0.5c-37.7,19.7-75.2,39.8-112.9,59.6c-7.7,4.1-12.4,10.1-12.4,19
+                                                            		c-0.1,9,4.6,15.2,12.4,19.4c37.4,20,74.8,40.1,112.2,60.2C166.3,209.2,178.7,212.6,192.4,212.6z" />
+                                        <path class="st0" d="M384,216.7c-2.1,5.9-6.6,9.2-12,12.1c-42.3,22.5-84.5,45.3-126.7,67.9c-35.4,18.9-70.9,19-106.3,0.1
+                                                            		c-42.3-22.5-84.6-45-127-67.3c-5.4-2.8-9.8-6.2-12-12.1c0-2.3,0-4.5,0-6.8c2.1-5.3,5.3-9.6,11.2-11.1c4.6-1.2,8.8,0.1,12.9,2.3
+                                                            		c42.8,22.8,85.8,45.4,128.6,68.3c26.4,14.2,52.6,14.1,79-0.2c42.1-22.8,84.4-45.3,126.7-68c12.4-6.7,19.6-4.4,25.7,7.9
+                                                            		C384,212.2,384,214.5,384,216.7z" />
+                                        <path class="st0" d="M0,278.2c2.1-5.3,5.3-9.6,11.2-11.1c4.6-1.2,8.8,0.1,12.9,2.3c42.9,22.8,85.8,45.4,128.6,68.3
+                                                            		c26.5,14.2,52.6,14.1,79-0.1c42.2-22.8,84.4-45.3,126.6-68c12.4-6.7,19.6-4.4,25.7,7.9c0,2.3,0,4.5,0,6.8c-2.1,5.9-6.6,9.2-12,12.1
+                                                            		c-42.4,22.6-84.7,45.4-127,68.1c-35.3,18.8-70.7,18.7-106,0c-42.3-22.5-84.6-45-127-67.3c-5.4-2.8-9.8-6.2-12-12.1
+                                                            		C0,282.7,0,280.5,0,278.2z" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="uppercase text-white font-bold">Select Layer (s)</p>
+                            </div>
+                        </div>
+                        <div>
+                            <svg class="w-6 h-6 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div id="layer-items"  style="overflow-x: scroll; overflow-y: scroll; font-family:inherit!important; width: fit-content !important; height: fit-content !important;  font-size: 13px; color: white" class="layer_list  mt-10 py-4 border-t border-slate-500 all_layers"> 
+                    
+                    <!-- <div class="flex items-center mb-4">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 mr-4 text-slate-700 bg-slate-100 rounded border-slate-300 focus:ring-slate-500 focus:ring-2">
+                        <label for="default-checkbox" class="text-white flex justify-start pt-1">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                </path>
+                            </svg>
+                            Water service providers
+                        </label>
+                    </div> -->
+                   
+                    <!-- <div class="flex items-center mb-4">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 mr-4 text-slate-700 bg-slate-100 rounded border-slate-300 focus:ring-slate-500 focus:ring-2">
+                        <label for="default-checkbox" class="text-white flex justify-start pt-1">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                </path>
+                            </svg>
+                            Small Scale service providers
+                        </label>
+                    </div> -->
+                    
+                    <!-- <div class="flex items-center mb-4">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 mr-4 text-slate-700 bg-slate-100 rounded border-slate-300 focus:ring-slate-500 focus:ring-2">
+                        <label for="default-checkbox" class="text-white flex justify-start pt-1">
+                            <svg class="w-5 h-5 mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 384 384"
+                            style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                            <style type="text/css">
+                                .st0 {
+                                    fill: #FFFFFF;
+                                }
+                            </style>
+                            <g>
+                                <path class="st0" d="M140.7,384c-7.3-2-14.6-4.1-20.7-8.9c-11.7-9.1-17.9-20.9-18.2-35.7c-0.2-13.1,0-26.2-0.2-39.4
+                                            		c0-1.7-1.1-3.9-2.3-4.9c-30.5-24.6-49.2-56.2-55.6-95c-1.2-7.5-1.5-15.1-2.3-23.1c-4.3,0-8.9,0-13.5,0c-9.3-0.1-16.1-6.4-16-15.2
+                                            		c0.1-8.6,6.8-14.8,15.9-14.8c109.1,0,218.3,0,327.4,0c9.2,0,15.9,6.2,15.9,14.8c0.1,8.7-6.6,15.1-16,15.2c-4.5,0-9,0-13.6,0
+                                            		c-0.6,6.7-0.9,13.3-1.8,19.8c-5.5,39.9-24.2,72.5-55.5,97.8c-2.1,1.7-3.1,3.4-3.1,6.2c0.2,12.1,0.1,24.2,0.1,36.4
+                                            		c0,23.9-14.3,41.4-37.6,46.2c-0.5,0.1-0.9,0.4-1.3,0.6C208.6,384,174.7,384,140.7,384z M311.4,177.3c-80.1,0-159.7,0-239.4,0
+                                            		c0,2.3-0.2,4.3,0,6.2c0.6,5.5,1.2,10.9,2.1,16.3c7.6,44.1,44.5,83.1,88,93.5c14.2,3.4,28.5,4.3,43.1,3c8.9-0.8,15.8,5.5,16.3,13.9
+                                            		c0.5,8.5-5.7,15.2-14.8,16.1c-24.9,2.4-49-1.1-72.1-10.6c-0.8-0.3-1.7-0.5-2.9-0.8c0,7.8,0,15.2,0,22.5c0,10.6,6.1,16.6,16.8,16.6
+                                            		c28.7,0,57.4,0,86.1,0c10.9,0,16.9-6,16.9-16.9c0-15.7,0-31.5,0-47.2c0-5.5,2.1-10,6.7-13.1c11.8-7.8,21.6-17.6,30-29
+                                            		C303.5,226.9,311.1,203.5,311.4,177.3z" />
+                                <path class="st0" d="M329.4,0c1,0.4,2,0.9,3.1,1.3c6.3,2.8,10,9.6,8.7,16.2c-1.3,7-7,12.1-14,12.4c-5.1,0.2-10.2,0-15.7,0
+                                            		c0,1.6,0,3,0,4.3c0,22.4,0.1,44.7,0,67.1c0,11.1-10.3,18.4-20.3,14.6c-5.9-2.3-9.6-7.7-9.6-14.7c0-22.2,0-44.5,0-66.7
+                                            		c0-1.4,0-2.7,0-4.3c-59.9,0-119.5,0-179.6,0c0,1.3,0,2.7,0,4c0,22.4,0,44.7,0,67.1c0,11-9.9,18.3-19.9,14.8
+                                            		c-6.1-2.1-10-7.7-10-14.8c0-22.5,0-45,0-67.5c0-1.1,0-2.2,0-3.9c-4.5,0-8.8,0-13.1,0c-9.1,0-15.2-4.6-16.7-12.4
+                                            		c-1.4-7.5,2.8-14,11.2-17.1c0.2-0.1,0.4-0.3,0.6-0.4C145.7,0,237.5,0,329.4,0z" />
+                                <path class="st0" d="M161.7,90c-5,0-10,0.1-14.9,0c-8.5-0.2-15-6.7-15-15c0-8.3,6.5-14.9,15-15c10-0.1,19.9-0.1,29.9,0
+                                            		c8.5,0.1,15,6.7,15,14.9c0,8.3-6.5,14.8-15,15C171.7,90.1,166.7,90,161.7,90z" />
+                            </g>
+                        </svg>
+                           Sanitation facilities
+                        </label>
+                    </div> -->
+
+                    <!-- <div class="flex items-center mb-4">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 mr-4 text-slate-700 bg-slate-100 rounded border-slate-300 focus:ring-slate-500 focus:ring-2">
+                        <label for="default-checkbox" class="text-white flex justify-start pt-1">
+                            <svg class="w-5 h-5 mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 384 384"
+                            style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                            <style type="text/css">
+                                .st0 {
+                                    fill: #FFFFFF;
+                                }
+                            </style>
+                            <g>
+                                <path class="st0"
+                                    d="M199.1,0c7.6,1.7,15.5,2.7,22.9,5.1c44,14.1,73.3,57.5,69.8,102.6c-3.8,47.9-38.2,85.9-84.7,93.5
+                                            		c-57.4,9.3-110.7-31.7-116.7-89.7C84.8,56.3,124.9,6.5,179.8,0.7c1-0.1,1.9-0.4,2.9-0.7C188.1,0,193.6,0,199.1,0z M191.1,30
+                                            		c-39.2-0.1-71.2,31.9-71.3,71.2c0,39.1,31.7,71.2,70.7,71.3c39.3,0.1,71.4-31.7,71.5-71C262.1,62.2,230.2,30.1,191.1,30z" />
+                                <path class="st0" d="M321.9,384c-8.6-2.9-12-8.9-12.1-17.9c-0.7-49.8-38.8-94.5-88-101.8c-23.6-3.5-47.5-3.9-70.8,2.7
+                                            		c-40.4,11.4-71.6,49-75.5,90.9c-0.2,2.6-0.7,5.2-0.5,7.8c0.5,9.2-3.3,15.3-12.1,18.3c-2,0-4,0-6,0c-9.8-4.3-12.1-7.9-11.9-19.1
+                                            		c1.1-60.7,45.9-116.3,105.3-128.6c33.3-6.9,67.2-7.7,99.6,4.5c49.4,18.6,78.6,55,88.3,106.9c1.1,5.7,1.4,11.7,1.6,17.5
+                                            		c0.4,10.8-2.1,14.4-11.9,18.7C325.9,384,323.9,384,321.9,384z" />
+                            </g>
+                        </svg>
+                           Population
+                        </label>
+                    </div> -->
+
+                    <!-- <div class="flex items-center mb-4">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 mr-4 text-slate-700 bg-slate-100 rounded border-slate-300 focus:ring-slate-500 focus:ring-2">
+                        <label for="default-checkbox" class="text-white flex justify-start pt-1">
+                            <svg class="w-5 h-5 mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 384 384"
+                            style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                            <style type="text/css">
+                                .st0 {
+                                    fill: #FFFFFF;
+                                }
+                            </style>
+                            <g>
+                                <path class="st0" d="M18,0c9,3,12.7,9.4,12,18.7c-0.3,4.4,0,8.9,0,13.9c10.6-3.7,21.2-2.5,31.6-2.5c23.7-0.1,47.5-0.2,71.2,0
+                                            		c61.6,0.5,114.3,41.8,129.9,101.4c2.9,11.2,4.3,22.6,4.3,34.1c0,9.5,0,19,0,28.5c0,9.7,6.3,15.9,15.9,16c8.4,0,16.7,0,25.1,0
+                                            		c9.2,0,15.9,6.3,15.9,14.9c0.1,8.6-6.6,15.1-15.7,15.1c-11.1-0.1-22.3,0.6-33.3-0.8c-21.6-2.7-37.7-21.8-38-43.6
+                                            		c-0.2-13.9,0.4-27.8-0.8-41.6c-3.8-45.9-41-85.4-86.4-92.4c-6.3-1-12.7-1.5-19-1.5c-28-0.2-56-0.1-84-0.1C36.1,60,30,66,30,76.6
+                                            		c0,17,0,34,0,51c0,10.2,6.2,16.3,16.3,16.4c17.7,0,35.5,0,53.2,0c28.1,0,47.3,19.2,47.4,47.2c0,13-0.3,26,0.8,39
+                                            		c3.4,40.8,34.4,78,73.9,89.3c10.5,3,21.2,4.5,32.2,4.5c18.4-0.1,36.7-0.1,55.1,0c7.3,0,12.9,4.7,14.6,11.6
+                                            		c1.6,6.4-1.5,13.4-7.5,16.4c-2.3,1.1-5,1.8-7.5,1.8c-20,0.1-40,0.3-60,0C185.4,353,129.6,305,119.3,242.7
+                                            		c-1.4-8.3-1.8-16.9-2.2-25.3c-0.4-9.1,0-18.2-0.1-27.4c0-9.7-6.3-16-15.9-16c-13.6,0-27.2,0.1-40.9,0c-9.9-0.1-20,1.1-30.2-2.6
+                                            		c0,5.5,0,10.4,0,15.4c0,9.4-4.5,15.6-12.4,17.1c-7.4,1.4-13.7-2.7-17.2-11.1c-0.1-0.2-0.2-0.4-0.4-0.7C0,132,0,72,0,12
+                                            		C1.9,5.9,5.9,1.9,12,0C14,0,16,0,18,0z" />
+                                <path class="st0" d="M366,384c-9-3-12.1-9.4-12.1-18.7c0.2-56,0.1-112.1,0.1-168.1c0-2.1,0.1-4.3,0.6-6.3
+                                            		c1.6-6.1,6.8-10.3,12.9-10.9c6.2-0.6,12.2,2.8,15,8.5c0.5,1.1,1,2.3,1.5,3.4c0,60,0,120,0,180c-1.9,6.1-5.9,10.1-12,12
+                                            		C370,384,368,384,366,384z" />
+                            </g>
+                        </svg>
+                        Pipeline/Networks
+                        </label>
+                    </div> -->
+               
+                    <div class="external layerSwitcher" style=" height: 400px !important; margin-bottom: 100px;"></div>
+               
+                </div>
+            </nav>
+
+            <nav id="indicators" style="margin-top: 15px;" class=" z-40 w-72 mr-4 absolute top-12 right-0 bg-slate-50 py-2 px-4 rounded-l-md border-l border-t border-b border-slate-500 shadow-md">
+                <div id="indicators-toggle" class="cursor-pointer">
+                    <div class="flex justify-between">
+                        <div class="flex justify-start">
+                            <div class="mr-4">
+                                <svg class="w-5 h-5 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="uppercase text-slate-800 font-bold"><span id="main_title"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <svg class="w-6 h-6 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="indicators-container" class="indicators-container">
+                    <!-- Start National Level -->
+                    <div id="national_level" style="text-transform: capitalize;">
+                    <div id="indicator-items" class="border-t border-slate-400 my-2 py-2" style="color: black !important;">
+                        <h6 class="text-slate-700 text-center font-bold">National <span id="national_indicator_name"></span></h6>
+                         <div class="flex justify-between my-8">
+                            <div class="circle_water_coverage basis-2/5 flex flex-col justify-center">
+                                <div data-end-value="57" id="water_coverage_analytics" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+                            <div class="circle_non_revenue basis-2/5 flex flex-col justify-center hidden">
+                                <div data-end-value="47" id="non_revenue_analytics" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+                            <div class="circle_metering_ratio basis-2/5 flex flex-col justify-center hidden">
+                                <div data-end-value="96" id="metering_ratio_analytics" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+
+                            <div class="circle_staff_productivity basis-2/5 flex flex-col justify-center hidden">
+                                <div data-end-value="7" style="background: conic-gradient(#ffeb3b 331.2deg, rgb(187, 247, 208) 331.2deg) !important;" 
+                                 id="staff_productivity_analytics" class="metric  circular-progress circular-progress-small mx-auto">
+                                    <div style="color: black !important" class="metric value-container value-container-small text-slate-600">7</div>
+                                </div>
+                            </div>
+
+                            <!-- Staff productivity -->
+                            <div data-water_coverage="water_coverage" class="staff_productivity basis-3/5 hidden">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <!-- border-yellow-200 -->
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 14</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border" style="color: black; background-color: #F9F919;">
+                                            <p class="benchmark-small-text p-0 m-0">9 - 14</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 9</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Water Coverage -->
+                            <div data-water_coverage="water_coverage" class="water_coverage basis-3/5">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <!-- border-yellow-200 -->
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 80</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>    
+                                        <div class="benchmark-small bg-yellow-300 border" style="color: black; background-color: #F9F919;">
+                                            <p class="benchmark-small-text p-0 m-0">80 - 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Non Revenue Water -->
+                            <div data-nrw="nrw" class="nrw basis-3/5 hidden">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 20</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border" style="color: black; background-color: #F9F919;">
+                                            <p class="benchmark-small-text p-0 m-0">20 - 25</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 20</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Metering Ratio -->
+                            <div data-metering_ratio="metering_ratio"  class="metering_ratio basis-3/5 hidden">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 95</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border" style="color: black; background-color: #F9F919;">
+                                            <p class="benchmark-small-text p-0 m-0">95 - 99</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">100</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <!-- <div id="not_national" class="flex justify-between my-8">
+                            <div class="basis-2/5 flex flex-col justify-center">
+                                <div data-end-value="57" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+                            <div class="basis-3/5">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 80</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border border-yellow-200">
+                                            <p class="benchmark-small-text p-0 m-0">80 - 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        
+                        <div id="metrics">
+                            <!-- <div class="metric-container">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/clock-04.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs">Staff Productivity</p>
+                                </div>
+                                <div class="metric-element bg-amber-500">
+                                    <p id="staff_productivity">0</p>
+                                </div>
+                            </div> -->
+                          <!-- 
+                            <div class="metric-container">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/cost-coverage-01.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs">Metring Ratio %</p>
+                                </div>
+                                <div class="metric-element bg-green-500">
+                                    <p class="p-10" id="metering_ratio">0</p>
+                                </div>
+                            </div> -->
+                            <!-- <h6 class="national_legend_title text-slate-700 text-center font-bold">Map Legend</h6>
+                            <div id="legend" class=" mt-1 mx-1 -mb-1 p-1 text-slate-400 flex justify-between rounded-md"></div> -->
+                            <div style="text-transform: capitalize;" id="indicator_title_below"></div>
+    
+                        </div>
+                    <br>
+                    <div class="bg-slate-700 mt-4 -mx-4 -mb-2 p-4 text-slate-400 flex justify-between rounded-md">
+                        <div class="basis-1/2">
+                            <div class="mb-6">
+                             <p class="meta-label">Total population served</p>
+                             <p id="population_served" class="font-bold text-1xl">0</p>
+                            </div>
+    
+                             <div>
+                                 <p class="meta-label">Total active water connections</p>
+                                 <p id="active_water_connections" class="font-bold text-1xl">0</p>
+                             </div>
+                         </div>
+                         <div class="basis-1/2 pl-2 border-l border-slate-500">
+                             <div class="mb-6">
+                                 <p class="meta-label">Total population in service area</p>
+                                 <p id="population_service_area" class="font-bold text-1xl">0</p>
+                             </div>
+                         
+                             <div>
+                                 <p class="meta-label">Total water produced (M<sup>3</sup>)</p>
+                                 <p id="water_produced"class="font-bold text-1xl">0</p>
+                             </div>
+                         </div>
+                       </div>
+                    </div>
+
+                    </div>
+                   <!-- End National Level -->
+                   <!-- County levels -->
+
+                   <div id="county_level">
+                    <div  style="overflow-x: scroll !important; overflow-y: scroll !important; height:400px;" id="indicator-items" class="border-t border-slate-400 my-2 py-2">
+                       
+                        <!-- <div class="flex justify-between my-8">
+                            <div class="basis-2/5 flex flex-col justify-center">
+                                <div data-end-value="57" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+                            <div class="basis-3/5">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 80</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border border-yellow-200">
+                                            <p class="benchmark-small-text p-0 m-0">80 - 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <hr>
+                        <!-- <div id="not_national" class="flex justify-between my-8">
+                            <div class="basis-2/5 flex flex-col justify-center">
+                                <div data-end-value="57" class="circular-progress circular-progress-small mx-auto">
+                                    <div class="value-container value-container-small text-slate-600">0%</div>
+                                </div>
+                            </div>
+                            <div class="basis-3/5">
+                                <div id="sector-benchmarks" class="text-center">
+                                    <h2 class="font-bold uppercase text-center text-xs border-b border-slate-300 mb-2">Sector benchmarks
+                                    </h2>
+                                    <div id="benchmarks">
+                                        <div class="benchmark-small bg-red-500 border border-red-300">
+                                            <p class="benchmark-small-text p-0 m-0">&lt; 80</p>
+                                            <p class="benchmark-small-text p-0 m-0">Not acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-yellow-300 border border-yellow-200">
+                                            <p class="benchmark-small-text p-0 m-0">80 - 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Acceptable</p>
+                                        </div>
+                                        <div class="benchmark-small bg-green-400 border border-green-200">
+                                            <p class="benchmark-small-text p-0 m-0">&gt; 90</p>
+                                            <p class="benchmark-small-text p-0 m-0">Good</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                       
+                       
+                       <p style="overflow: auto !important;" id="wusa_info_box"></p>
+                        <div id="metrics">
+                            <div>
+                            <div class="metric-container" id="metering_ratio_county">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/metering-ratio-02.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs county_name_indicator_mr"></p>
+                                </div>
+                                <!-- id="meter_ratio_color_wc" -->
+                                <div class="metric-element">
+                                    <p class="indicator_value_mr" style="color:black">0</p>
+                                </div>
+                              </div> 
+                              <div  style="text-transform: capitalize;" id="county_level_legend_mr"></div>
+                           </div>
+                            <div>
+                            <div class="metric-container font-black" id="water_coverage_county">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/drinking-water-01.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs county_name_indicator_wc"></p>
+                                </div>
+                                <!-- id="water_coverage_color_wc" -->
+                                <div  class="metric-element">
+                                    <p class="indicator_value_wc" style="color:black">0</p>
+                                </div>
+                            </div> 
+                             <div style="text-transform: capitalize;" id="county_level_legend_wc"></div>
+                          </div>
+                            <div>
+                              <div class="metric-container font-black" id="non_revenue_county">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/revenue-collection-05.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs county_name_indicator_nrw"></p>
+                                </div>
+                                <!-- id="water_coverage_color_wc" -->
+                                <div  class="metric-element">
+                                    <p class="indicator_value_nrw" style="color:black">0</p>
+                                </div>
+                            </div>
+                            <div style="text-transform: capitalize;" id="county_level_legend_nrw"></div>
+                          </div>
+                            <!-- <div class="metric-container">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/clock-04.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs">Staff Productivity</p>
+                                </div>
+                                <div class="metric-element bg-amber-500">
+                                    <p id="staff_productivity">0</p>
+                                </div>
+                            </div> -->
+                          <!-- 
+                            <div class="metric-container">
+                                <div class="metric-element border border-slate-300">
+                                    <img src="./img/icons/cost-coverage-01.svg" class="h-4 w-4 mx-auto">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p class="metric-label text-xs">Metring Ratio %</p>
+                                </div>
+                                <div class="metric-element bg-green-500">
+                                    <p class="p-10" id="metering_ratio">0</p>
+                                </div>
+                            </div> -->
+                        </div>
+                       
+                        <!-- Granular Data  -->
+                        <div class="bg-slate-700 mt-4  mb-2 p-4 text-slate-400 flex justify-between rounded-md" id="water_coverage_stats">
+                         <div class="basis-2/2  pl-2 border-l border-slate-500">
+                             <div class="mb-6">
+                                 <p class="meta-label">Total Population Served</p>
+                                 <p class="population_served_wc font-bold text-1xl">0</p>
+                             </div>
+                             <div>
+                                 <p class="meta-label">Total Population in Service Area</p>
+                                 <p class="population_service_area_wc font-bold text-1xl">0</p>
+                             </div>
+                         </div>
+                       </div>
+
+                       <div  id="metering_ratio_stats" class="bg-slate-700 mt-4  mb-2 p-4 text-slate-400 flex justify-between rounded-md">
+                        <div class="basis-2/2  pl-2 border-l border-slate-500">
+                            <div class="mb-6">
+                                <p class="meta-label">Total active water connections</p>
+                                <p class="active_water_connections_mr font-bold text-1xl">0</p>
+                            </div>
+                            <div>
+                                <p class="meta-label">Total Number Metered Connections</p>
+                                <p class="number_metered_connections_mr font-bold text-1xl">0</p>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div  id="non_revenue_stats" class="bg-slate-700 mt-4  mb-2 p-4 text-slate-400 flex justify-between rounded-md">
+                        <div class="basis-2/2  pl-2 border-l border-slate-500">
+                            <div class="mb-6">
+                                <p class="meta-label">Total Water Produced</p>
+                                <p class="water_produced_indicator_nrw font-bold text-1xl">0</p>
+                            </div>
+                            <div>
+                                <p class="meta-label">Total Billed Volume</p>
+                                <p class="billed_volume_indicator_nrw font-bold text-1xl">0</p>
+                            </div>
+                        </div>
+                      </div>
+                        
+                     </div>
+                    </div>
+
+                   <!-- County Levels -->
+                </div>
+            </nav>
+        </main>
+
+        <footer>
+            <!-- drawer init and toggle -->
+            <div class="text-center">
+                <button
+                    class="hidden"
+                    type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom"
+                    data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">
+                    About Majidata
+                </button>
+            </div>
+
+            <!-- drawer component -->
+            <div id="drawer-swipe"
+                class="fixed z-40 w-full overflow-y-auto bg-slate-800 border-t border-slate-200 rounded-t-sm
+                tabindex="-1" aria-labelledby="drawer-swipe-label">
+                <div class="p-4 cursor-pointer hover:bg-slate-700-50" data-drawer-toggle="drawer-swipe">
+                    <span class="absolute w-8 h-1 -translate-x-1/2 bg-slate-600 rounded-sm top-3 left-1/2"></span>
+                    <h5 id="drawer-swipe-label" class="inline-flex items-center text-sm uppercase text-slate-200 font-medium">
+                        <svg class="w-5 h-5 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg><span class="font-bold">About</span></h5>
+                </div>
+                <div class="container mx-auto flex justify-between pb-12 text-slate-200">
+                    <div class="basis-1/2 pr-12">
+                       <img src="./img/majidata-logo-2.png" alt="Majidata" class="h-12 mx-auto mt-12 mb-6">
+                        <p class="mb-4">MajiData was launched as the pro-poor database of the Kenyan water sector covering all urban low income areas in Kenya. A comprehensive data collection exercise started in 2009 and ended in 2011. More than 1800 urban low income areas in 212 cities and towns of Kenya were mapped and the data captured. In 2016, the database was updated. Developed initially by WASREB and WSTF with the support of GIZ through Water Sector Reform Programme, the database has now grown with the vision of being the repository for georeferenced water services data.</p>
+                        <p>This new version of Majidata offers not only the pro-poor information and sanitation infrastructure, but also Water Service Providers' service area maps, networks and small scale service providers within the counties.</p>
+                    </div>
+                    <div class="basis-1/2 pl-12 border-l border-slate-500">
+                        <img src="./img/wtf-logo.png" alt="Water Sector Trust Fund" class="h-24 mx-auto mb-6">
+                        <p class="mb-4">The Water Sector Trust Fund (WaterFund) is a Kenyan State Corporation under the Ministry of Water & Sanitation and Irrigation and established under the Water Act, 2016, with the mandate to provide conditional and unconditional grants to the Counties and to assist in financing the development of and management of water and sanitation services in the marginalised and underserved areas.</p>
+                        <p>It previously existed as the Water Services Trust Fund prior to the repeal of the Water Act, 2002, which had established it.</p>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+  
+  <!-- request for data  -->
+  <div id="request-for-data-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full md:inset-0 h-modal md:h-full">
+      <div class="relative w-full max-w-md h-full md:h-auto">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-md shadow-lg">
+              <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="request-for-data-modal">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  <span class="sr-only">Close modal</span>
+              </button>
+              <div class="py-6 px-6 lg:px-8">
+                  <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Request for data</h3>
+                  <form class="space-y-6" action="#">
+                      <div>
+                          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                          <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@company.com" required>
+                      </div>
+                      
+                      <button class="w-full text-white bg-slate-700 hover:bg-slate-600 font-medium rounded-md text-sm px-5 py-2.5 text-center uppercase">Submit request</button>
+                      
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div> 
+
+   <!-- contact us  -->
+   <div id="contact-us-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-md shadow-lg">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="contact-us-modal">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="py-6 px-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Contact us</h3>
+                <form class="space-y-6" action="#">
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@company.com" required>
+                    </div>
+
+                    <div>
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Your phone</label>
+                        <input type="tel" name="phone" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                    </div>
+
+                    <div>
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Message/Enquiry</label>
+                       <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "></textarea>
+                    </div>
+                    
+                    
+                    <button class="w-full text-white bg-slate-700 hover:bg-slate-600 font-medium rounded-md text-sm px-5 py-2.5 text-center uppercase">Get in touch</button>
+                    
+                </form>
+            </div>
+        </div>
+      </div>
+     </div>
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+        <script type="text/javascript" src="https://openlayers.org/en/latest/legacy/ol.js"></script>
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
+        <script type="text/javascript" src="./dist/ol-ext.js"></script>
+        <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+        <script src="https://unpkg.com/elm-pep"></script>
+        <script type="text/javascript">
+                const _0x23b13d=_0x134a;(function(_0x2d78d2,_0x1ba2af){const _0x5b1b28=_0x134a,_0x160744=_0x2d78d2();while(!![]){try{const _0x2c7a6e=parseInt(_0x5b1b28(0x21d))/0x1*(parseInt(_0x5b1b28(0x1f2))/0x2)+-parseInt(_0x5b1b28(0x1a7))/0x3+parseInt(_0x5b1b28(0x23a))/0x4*(parseInt(_0x5b1b28(0x225))/0x5)+-parseInt(_0x5b1b28(0x252))/0x6+parseInt(_0x5b1b28(0x213))/0x7*(-parseInt(_0x5b1b28(0x24c))/0x8)+-parseInt(_0x5b1b28(0x273))/0x9+-parseInt(_0x5b1b28(0x233))/0xa*(-parseInt(_0x5b1b28(0x1b9))/0xb);if(_0x2c7a6e===_0x1ba2af)break;else _0x160744['push'](_0x160744['shift']());}catch(_0x1ca646){_0x160744['push'](_0x160744['shift']());}}}(_0x56ed,0x512d2));let public_url=_0x23b13d(0x1e2),workspace=_0x23b13d(0x1db),bounds=[3400961.92,-340390.53,5257464.46,393404.94],format=_0x23b13d(0x1ed);get_kpi_array(),get_water_service_area_utilities_array();function _0x134a(_0x149f0a,_0x4d67f2){const _0x56edc2=_0x56ed();return _0x134a=function(_0x134ad0,_0x1a8af4){_0x134ad0=_0x134ad0-0x19e;let _0x408a44=_0x56edc2[_0x134ad0];return _0x408a44;},_0x134a(_0x149f0a,_0x4d67f2);}var osmLayer=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1f1))]({'source':new ol[(_0x23b13d(0x232))][(_0x23b13d(0x1cf))]()});let view=new ol[(_0x23b13d(0x270))]({'zoom':0xf,'center':[0.340505,37.310292]}),viewProjection=view[_0x23b13d(0x26f)](),viewResolution=view[_0x23b13d(0x1e4)](),map=new ol[(_0x23b13d(0x201))]({'target':'map','view':view});map[_0x23b13d(0x1c3)]()[_0x23b13d(0x242)](bounds,map[_0x23b13d(0x25d)]());var lswitcher=new ol['control'][(_0x23b13d(0x1c9))]({'target':$(_0x23b13d(0x22d))[_0x23b13d(0x256)](0x0),'selection':!![],'allwaysOnTop':!![],'extent':!![]}),tooltip=document['getElementById']('tooltip'),overlay=new ol[(_0x23b13d(0x1fc))]({'element':tooltip,'offset':[0xa,0x0],'positioning':_0x23b13d(0x1c6)});map[_0x23b13d(0x20b)](overlay);function displayTooltip(_0x5d52b9){const _0x361df8=_0x23b13d;console[_0x361df8(0x250)]('Tooltip',_0x5d52b9);var _0x2f7048=_0x5d52b9[_0x361df8(0x1b2)],_0x1f5182=map[_0x361df8(0x25c)](_0x2f7048,function(_0x47f08f){return _0x47f08f;});overlay[_0x361df8(0x1b6)](_0x5d52b9[_0x361df8(0x1d0)]),tooltip[_0x361df8(0x21a)]=_0x361df8(0x1ab);};$('#county_level')['hide']();var fullscreen=new ol['control']['FullScreen']();map['addControl'](fullscreen);var parser=new ol['format'][(_0x23b13d(0x215))]();const root=map[_0x23b13d(0x20e)]();let county_boundaries_json1=new ol['source']['Vector']({'projection':'EPSG:3857','url':_0x23b13d(0x1a2),'format':new ol['format'][(_0x23b13d(0x22f))]()}),topography=new ol['source']['XYZ']({'attributions':_0x23b13d(0x1d4)+_0x23b13d(0x1eb),'url':_0x23b13d(0x27a)+_0x23b13d(0x1a5)}),county_boundaries=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1e7))]({'displayInLayerSwitcher':![],'visible':!![],'source':county_boundaries_json1,'title':'County\x20Boundaries'}),topography_basemap=new ol['layer'][(_0x23b13d(0x1f1))]({'displayInLayerSwitcher':!![],'visible':!![],'source':topography,'title':_0x23b13d(0x1ea)}),kpi_wms=new ol[(_0x23b13d(0x1f3))]['Tile']({'displayInLayerSwitcher':![],'visible':!![],'source':new ol[(_0x23b13d(0x232))][(_0x23b13d(0x269))]({'url':_0x23b13d(0x25e),'params':{'FORMAT':format,'VERSION':_0x23b13d(0x264),'tiled':!0x0,'STYLES':_0x23b13d(0x23e),'LAYERS':_0x23b13d(0x1b5),'exceptions':'application/vnd.ogc.se_inimage','tilesOrigin':_0x23b13d(0x263)}}),'title':_0x23b13d(0x200)}),labeled_county_boundaries=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1f1))]({'displayInLayerSwitcher':![],'visible':!![],'source':new ol['source'][(_0x23b13d(0x269))]({'url':'http://102.37.157.16:8080/geoserver/WASREB/wms','params':{'FORMAT':format,'VERSION':_0x23b13d(0x264),'tiled':!0x0,'STYLES':_0x23b13d(0x1ff),'LAYERS':_0x23b13d(0x1d6),'exceptions':_0x23b13d(0x230),'tilesOrigin':_0x23b13d(0x263)}})});map[_0x23b13d(0x1a8)](topography_basemap),map[_0x23b13d(0x1a8)](kpi_wms),county_boundaries[_0x23b13d(0x1c8)](0.5),map['addLayer'](county_boundaries),window['localStorage'][_0x23b13d(0x1d5)](_0x23b13d(0x22e),''),$('.layer_list')[_0x23b13d(0x276)]('hidden')[_0x23b13d(0x26e)](_0x23b13d(0x1e5)),document[_0x23b13d(0x209)]('legend_kpi')[_0x23b13d(0x21a)]='<img\x20\x20height=\x27200\x27\x20width=\x27120\x27\x20src=\x27http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms?Service=WMS&REQUEST=GetLegendGraphic&STYLE=water_coverage&VERSION=1.0.0&FORMAT=image/png&WIDTH=50&HEIGHT=30&LAYER=kpi_wsp_v\x27>',document['getElementById'](_0x23b13d(0x265))[_0x23b13d(0x21a)]=_0x23b13d(0x1d1),document[_0x23b13d(0x209)]('national_indicator_name')[_0x23b13d(0x21a)]=_0x23b13d(0x1d1),document[_0x23b13d(0x209)](_0x23b13d(0x1fa))[_0x23b13d(0x21a)]='INDICATORS',$(_0x23b13d(0x1ad))[_0x23b13d(0x276)]('show')[_0x23b13d(0x26e)](_0x23b13d(0x1ca)),window[_0x23b13d(0x229)][_0x23b13d(0x1d5)]('LayerInfo',_0x23b13d(0x204)),$(_0x23b13d(0x244))['show'](),$(_0x23b13d(0x1e6))[_0x23b13d(0x1e9)](),$(document)['on'](_0x23b13d(0x1da),_0x23b13d(0x1fd),function(){const _0x396bfe=_0x23b13d;$(_0x396bfe(0x1d3))[_0x396bfe(0x1e9)](),$(_0x396bfe(0x19e))[_0x396bfe(0x1e9)](),$(_0x396bfe(0x1f8))[_0x396bfe(0x1e9)](),$('#legend_introduction_wusa')[_0x396bfe(0x1e5)](),$(_0x396bfe(0x244))[_0x396bfe(0x1e9)](),document[_0x396bfe(0x209)](_0x396bfe(0x1fa))['innerHTML']='LAYERS',map['getLayers']()[_0x396bfe(0x1a1)](function(_0x56bb2b){const _0x1280dd=_0x396bfe,_0x468951=localStorage[_0x1280dd(0x220)](_0x1280dd(0x1e1));_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x1ae))&&_0x56bb2b['get'](_0x1280dd(0x1a4))!=_0x1280dd(0x1ea)&&_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x1a4))!=_0x1280dd(0x24a)&&(console[_0x1280dd(0x250)](_0x1280dd(0x255),_0x56bb2b[_0x1280dd(0x256)]('visible'),'LAYER\x20NAME',_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x219))),_0x56bb2b[_0x1280dd(0x1af)](![]));}),map[_0x396bfe(0x1a8)](county_boundaries);}),$(document)['on']('click',_0x23b13d(0x1e8),function(){const _0x5b1d39=_0x23b13d;document[_0x5b1d39(0x209)](_0x5b1d39(0x1fa))[_0x5b1d39(0x21a)]='INDICATORS';const _0x5d4d8f=localStorage[_0x5b1d39(0x220)](_0x5b1d39(0x1ba));window[_0x5b1d39(0x229)][_0x5b1d39(0x1d5)](_0x5b1d39(0x1e1),$(this)[_0x5b1d39(0x1dd)]('layertitle')),$(_0x5b1d39(0x24f))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),map['getLayers']()[_0x5b1d39(0x1a1)](function(_0x2742f4){const _0x2fe468=_0x5b1d39,_0x31792e=localStorage[_0x2fe468(0x220)](_0x2fe468(0x1e1));_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1ae))&&_0x2742f4['get'](_0x2fe468(0x1a4))!=_0x2fe468(0x24a)&&_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1a4))!=_0x2fe468(0x1ea)&&(console[_0x2fe468(0x250)](_0x2fe468(0x255),_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1ae)),_0x2fe468(0x1bb),_0x2742f4[_0x2fe468(0x256)]('name')),_0x2742f4[_0x2fe468(0x1af)](![]));});let _0x3298c4=new ol[(_0x5b1d39(0x1f3))][(_0x5b1d39(0x1f1))]({'displayInLayerSwitcher':![],'visible':!![],'source':new ol[(_0x5b1d39(0x232))]['TileWMS']({'url':_0x5b1d39(0x25e),'params':{'FORMAT':format,'VERSION':_0x5b1d39(0x264),'tiled':!0x0,'STYLES':$(this)[_0x5b1d39(0x1dd)]('stylename'),'LAYERS':_0x5b1d39(0x1d9)+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1f5)),'exceptions':_0x5b1d39(0x230),'tilesOrigin':_0x5b1d39(0x263)}}),'title':$(this)[_0x5b1d39(0x1dd)]('layertitle')}),_0x3e440c=map[_0x5b1d39(0x1a8)](_0x3298c4);window[_0x5b1d39(0x229)][_0x5b1d39(0x1d5)](_0x5b1d39(0x1ba),_0x5b1d39(0x1bf)+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1f5))+'|'+$(this)[_0x5b1d39(0x1dd)]('stylename')+''),document[_0x5b1d39(0x209)](_0x5b1d39(0x205))[_0x5b1d39(0x21a)]=$(this)['data'](_0x5b1d39(0x26a))[_0x5b1d39(0x1f4)]('_','\x20');if($(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x23e))$(_0x5b1d39(0x1c2))['addClass']('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1c0))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass']('show'),$('.metering_ratio')[_0x5b1d39(0x276)]('hidden')[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)]('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1f9))['addClass'](_0x5b1d39(0x1ca))['removeClass']('show'),$('.circle_staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5));else{if($(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x217))$(_0x5b1d39(0x1c2))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))[_0x5b1d39(0x276)]('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1a6))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$('.circle_water_coverage')['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))['removeClass'](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x20d))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5));else{if($(this)['data']('layertitle')==_0x5b1d39(0x25f))$(_0x5b1d39(0x1a6))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)]('hidden'),$(_0x5b1d39(0x1c2))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show'),$('.staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show'),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))['removeClass'](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x20d))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show');else $(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x1d8)&&($(_0x5b1d39(0x1a6))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c2))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))['addClass']('hidden')['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)]('hidden')[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass']('show'),$('.circle_staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)));}}document[_0x5b1d39(0x209)](_0x5b1d39(0x259))[_0x5b1d39(0x21a)]='<img\x20\x20height=\x27200\x27\x20width=\x27120\x27\x20src=\x27'+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1ee))+'\x27>',document[_0x5b1d39(0x209)](_0x5b1d39(0x265))[_0x5b1d39(0x21a)]=''+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))[_0x5b1d39(0x1f4)]('_','\x20')+'';});async function get_kpi_array(){const _0x2cd904=_0x23b13d;await fetch(_0x2cd904(0x1d2))[_0x2cd904(0x271)](function(_0x323e31){const _0x13e6a8=_0x2cd904;return _0x323e31[_0x13e6a8(0x1f0)]();})['then'](function(_0xe37955){const _0x179b44=_0x2cd904;var _0x268d5b=new ol[(_0x179b44(0x26b))][(_0x179b44(0x210))](),_0x5ef402=_0x268d5b[_0x179b44(0x1c1)](_0xe37955),_0x251341=_0x5ef402[_0x179b44(0x1a3)][_0x179b44(0x237)][_0x179b44(0x237)];return _0x251341;})[_0x2cd904(0x271)](function(_0x4386cb){const _0xfcd304=_0x2cd904;window[_0xfcd304(0x229)][_0xfcd304(0x1d5)](_0xfcd304(0x21e),JSON[_0xfcd304(0x1c7)](_0x4386cb));let _0x24a358=[];var _0x498287=$(_0xfcd304(0x21c));let _0x36d0e9;for(var _0x4ec6b9=0x0;_0x4ec6b9<_0x4386cb[_0xfcd304(0x1e3)];_0x4ec6b9++){let _0x467815=_0x4386cb[_0x4ec6b9][_0xfcd304(0x1ac)];_0x498287['append'](_0xfcd304(0x239)+_0x4386cb[_0x4ec6b9][_0xfcd304(0x25b)][_0xfcd304(0x1f4)]('_','\x20')+'</b></h5><br>');for(var _0x47e565=0x0;_0x47e565<_0x467815[_0xfcd304(0x1e3)];_0x47e565++){console[_0xfcd304(0x250)](_0xfcd304(0x1cd),_0x467815[_0x47e565]);if(_0x467815[_0x47e565]['Title']==_0xfcd304(0x217))_0x36d0e9=_0xfcd304(0x245);else{if(_0x467815[_0x47e565][_0xfcd304(0x25b)]==_0xfcd304(0x1d8))_0x36d0e9='./img/icons/staff-productivity-03.svg';else{if(_0x467815[_0x47e565]['Title']=='metering_ratio')_0x36d0e9=_0xfcd304(0x23d);else _0x467815[_0x47e565][_0xfcd304(0x25b)]==_0xfcd304(0x23e)&&(_0x36d0e9='./img/icons/drinking-water-01.svg');}}console['log'](_0xfcd304(0x1fb)+_0x4386cb[_0x4ec6b9]['Name']+'',_0x467815[_0x47e565][_0xfcd304(0x25b)]),_0x467815[_0x47e565][_0xfcd304(0x25b)]!=_0xfcd304(0x1d8)&&_0x498287[_0xfcd304(0x207)](_0xfcd304(0x1a9)+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0][_0xfcd304(0x254)][0x1]+_0xfcd304(0x227)+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0][_0xfcd304(0x254)][0x0]+'\x22\x20data-legendurl=\x22'+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0]['OnlineResource']+'\x22\x20data-layertitle=\x22'+_0x467815[_0x47e565][_0xfcd304(0x25b)]+_0xfcd304(0x221)+_0x467815[_0x47e565][_0xfcd304(0x1cd)]+'\x22\x20data-layername=\x22'+_0x4386cb[_0x4ec6b9][_0xfcd304(0x1cd)]+_0xfcd304(0x262)+_0x36d0e9+_0xfcd304(0x212)+_0x467815[_0x47e565][_0xfcd304(0x25b)]['replaceAll']('_','\x20')+_0xfcd304(0x211));}}})[_0x2cd904(0x271)](function(_0x1bbfa5){});}async function get_water_service_area_utilities_array(){const _0x277112=_0x23b13d;await fetch('http://102.37.157.16:8080/geoserver/WASREB/ows?service=wms&version=1.1.1&request=GetCapabilities')[_0x277112(0x271)](function(_0x352e92){const _0x3448a5=_0x277112;return _0x352e92[_0x3448a5(0x1f0)]();})['then'](function(_0x248976){const _0x1526de=_0x277112;var _0x4de706=new ol[(_0x1526de(0x26b))][(_0x1526de(0x210))](),_0x3c8dee=_0x4de706[_0x1526de(0x1c1)](_0x248976),_0x22df58=_0x3c8dee[_0x1526de(0x1a3)][_0x1526de(0x237)]['Layer'];return _0x22df58;})[_0x277112(0x271)](function(_0x2df159){const _0x4c87a3=_0x277112;window[_0x4c87a3(0x229)][_0x4c87a3(0x1d5)]('water_utilities_service_area',JSON[_0x4c87a3(0x1c7)](_0x2df159));let _0x38aeb1=[];for(var _0x3c80a9=0x0;_0x3c80a9<_0x2df159[_0x4c87a3(0x1e3)];_0x3c80a9++){map[_0x4c87a3(0x1a8)](new ol[(_0x4c87a3(0x1f3))][(_0x4c87a3(0x1f1))]({'zIndex':0x9,'visible':![],'source':new ol['source'][(_0x4c87a3(0x269))]({'url':_0x4c87a3(0x222),'params':{'FORMAT':format,'VERSION':_0x4c87a3(0x264),'tiled':!0x0,'STYLES':_0x2df159[_0x3c80a9][_0x4c87a3(0x1ac)][0x0][_0x4c87a3(0x1cd)],'LAYERS':'PUBLIC_PORTAL:'+_0x2df159[_0x3c80a9][_0x4c87a3(0x1cd)],'exceptions':'application/vnd.ogc.se_inimage','tilesOrigin':_0x4c87a3(0x263)}}),'title':_0x2df159[_0x3c80a9][_0x4c87a3(0x25b)]}));}return _0x38aeb1;})[_0x277112(0x271)](function(_0x5be42b){});}map['on'](_0x23b13d(0x1b7),function(_0x5a360f){const _0x3796eb=_0x23b13d;$(_0x3796eb(0x274))[_0x3796eb(0x1e9)](),displayTooltip;const _0x36f46e=window[_0x3796eb(0x229)][_0x3796eb(0x220)]('map_clicked');if(_0x36f46e=='on'){const _0x308ad2=map[_0x3796eb(0x20e)]()[_0x3796eb(0x249)]()[_0x3796eb(0x272)]();for(let _0x55c367=0x0;_0x55c367<_0x308ad2['length'];_0x55c367++){let _0x5494ec=_0x308ad2[_0x55c367];if(_0x5494ec[_0x3796eb(0x256)]('visible')&&_0x5494ec['get']('title')!='Topography\x20Basemap'&&_0x5494ec['get'](_0x3796eb(0x1a4))!=_0x3796eb(0x24a)){var _0x4a3d8d=_0x5494ec[_0x3796eb(0x235)]()[_0x3796eb(0x279)](_0x5a360f[_0x3796eb(0x1d0)],viewResolution,viewProjection,{'INFO_FORMAT':_0x3796eb(0x1d7)});$['ajax']({'url':_0x4a3d8d,'dataType':'json','success':function(_0x12fa8c){const _0x9310e5=_0x3796eb;var _0x4f947c=_0x12fa8c;if(_0x4f947c[_0x9310e5(0x1bd)][_0x9310e5(0x1e3)]!=0x0){console[_0x9310e5(0x250)](_0x9310e5(0x246),_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]),$(_0x9310e5(0x23c))[_0x9310e5(0x226)](_0x4f947c['features'][0x0]['properties']);const _0x182fdd=JSON[_0x9310e5(0x1cc)](JSON[_0x9310e5(0x1c7)](_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]));let _0x212a9b=_0x9310e5(0x26d)+_0x5494ec['get'](_0x9310e5(0x1a4))+'</h5><br><table\x20id=\x27layer_info_table\x27\x20class=\x27text-left\x27\x20style=\x27margin-left:\x2010px\x20!important;;\x20font-size:12px!important;\x27>';for(let _0x5fd5cc in _0x182fdd){console['log'](_0x182fdd[_0x5fd5cc]),_0x182fdd[_0x5fd5cc]!='null'&&(_0x212a9b+=_0x9310e5(0x23b)+_0x5fd5cc+'</td><td\x20style=\x27padding:\x204;\x20margin:4;\x27>'+_0x182fdd[_0x5fd5cc]+_0x9310e5(0x1c4));}_0x212a9b+=_0x9310e5(0x1b8),document[_0x9310e5(0x209)](_0x9310e5(0x208))[_0x9310e5(0x21a)]=_0x212a9b,$(_0x9310e5(0x1f8))[_0x9310e5(0x1e5)]();const _0x1a62ee=localStorage[_0x9310e5(0x220)](_0x9310e5(0x1ba))['split']('|');if(_0x1a62ee[0x0]==_0x9310e5(0x24e)||_0x1a62ee[0x0]==_0x9310e5(0x1de)){document[_0x9310e5(0x209)](_0x9310e5(0x25a))[_0x9310e5(0x21a)]=_0x9310e5(0x1ce)+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]['name']+'';if(_0x1a62ee[0x2]==_0x9310e5(0x1ef)||_0x1a62ee[0x2]=='water_coverage')document['getElementById'](_0x9310e5(0x1be))[_0x9310e5(0x21a)]=_0x9310e5(0x234)+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x23e)]+'';else{if(_0x1a62ee[0x2]==_0x9310e5(0x238)||_0x1a62ee[0x2]==_0x9310e5(0x217))document[_0x9310e5(0x209)](_0x9310e5(0x1be))[_0x9310e5(0x21a)]=_0x9310e5(0x203)+_0x4f947c['features'][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x1bc)]+'';else{if(_0x1a62ee[0x2]=='\x27metering_ration\x27'||_0x1a62ee[0x2]==_0x9310e5(0x25f))document['getElementById'](_0x9310e5(0x1be))[_0x9310e5(0x21a)]='<b>Metering\x20Ratio:</b>\x20'+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x243)]+'';else(_0x1a62ee[0x2]=='\x27staff_productivity\x27'||_0x1a62ee[0x2]==_0x9310e5(0x1d8))&&(document[_0x9310e5(0x209)](_0x9310e5(0x1be))['innerHTML']=_0x9310e5(0x241)+_0x4f947c['features'][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x1d8)]+'');}}}}}});}}}}),map['on'](_0x23b13d(0x1b3),function(_0x132c36){const _0x2a3198=_0x23b13d;window[_0x2a3198(0x229)][_0x2a3198(0x1d5)]('map_clicked','on'),$(_0x2a3198(0x274))[_0x2a3198(0x1e9)]();const _0x59b9f5=window[_0x2a3198(0x229)][_0x2a3198(0x220)](_0x2a3198(0x1ba)),_0x5327ac=_0x59b9f5['split']('|');console['log']('LayerInfo',_0x5327ac[0x2]);let _0x4247d6=map[_0x2a3198(0x25c)](_0x132c36[_0x2a3198(0x1b2)],function(_0x3fb006){return _0x3fb006;});map[_0x2a3198(0x1c3)]()[_0x2a3198(0x242)](_0x4247d6[_0x2a3198(0x24d)]()),map[_0x2a3198(0x1c3)]()[_0x2a3198(0x202)](0x9);var _0x1ebf84=new ol['style'][(_0x2a3198(0x1ac))]({'stroke':new ol['style'][(_0x2a3198(0x1aa))]({'color':_0x2a3198(0x1c5),'width':0x3,'opacity':0x1}),'fill':new ol['style'][(_0x2a3198(0x240))]({'color':[0xf5,0x8d,0x42]}),'zIndex':0x1});}),lswitcher['on'](_0x23b13d(0x1fe),function(_0x3a6a6c){const _0x18fd05=_0x23b13d;$(_0x18fd05(0x1d3))['hide'](),$(_0x18fd05(0x1f8))[_0x18fd05(0x1e9)](),$(_0x18fd05(0x19e))['hide'](),document[_0x18fd05(0x209)]('wusa_info_box')[_0x18fd05(0x21a)]='',$('#legend_introduction_wusa')[_0x18fd05(0x1e5)](),$(_0x18fd05(0x244))[_0x18fd05(0x1e9)]();let _0x2bddca=_0x3a6a6c[_0x18fd05(0x1f3)];document[_0x18fd05(0x209)](_0x18fd05(0x1fa))['innerHTML']=_0x18fd05(0x1cb);const _0x366c0c=window[_0x18fd05(0x229)]['getItem'](_0x18fd05(0x231));let _0x2b168e=JSON[_0x18fd05(0x1cc)](_0x366c0c),_0x22cd5e=_0x2b168e['find'](_0x52cd3b=>{const _0x93b553=_0x18fd05;return _0x52cd3b[_0x93b553(0x25b)]==''+_0x3a6a6c[_0x93b553(0x1f3)][_0x93b553(0x256)]('title')+'';});console[_0x18fd05(0x250)](_0x18fd05(0x26c),_0x22cd5e[_0x18fd05(0x1cd)]),document[_0x18fd05(0x209)](_0x18fd05(0x1b1))['innerHTML']=_0x18fd05(0x248)+_0x22cd5e[_0x18fd05(0x1ac)][0x0][_0x18fd05(0x19f)][0x0][_0x18fd05(0x254)][0x0]+_0x18fd05(0x22b)+_0x22cd5e[_0x18fd05(0x1ac)][0x0][_0x18fd05(0x19f)][0x0]['size'][0x1]+_0x18fd05(0x216)+_0x22cd5e['Style'][0x0][_0x18fd05(0x19f)][0x0][_0x18fd05(0x258)]+'\x27>',document['getElementById'](_0x18fd05(0x228))[_0x18fd05(0x21a)]=''+_0x3a6a6c[_0x18fd05(0x1f3)][_0x18fd05(0x256)](_0x18fd05(0x1a4))+'';const _0x1debcc=window['localStorage'][_0x18fd05(0x220)](_0x18fd05(0x1ba)),_0x573c74=_0x1debcc[_0x18fd05(0x223)]('|');console[_0x18fd05(0x250)](_0x18fd05(0x1ba),_0x573c74[0x2]),_0x573c74[0x0]=='KPI'&&map[_0x18fd05(0x249)]()[_0x18fd05(0x1a1)](function(_0x5a2c20){const _0x378f21=_0x18fd05;_0x5a2c20[_0x378f21(0x256)](_0x378f21(0x1ae))&&_0x573c74[0x2]==_0x5a2c20[_0x378f21(0x256)](_0x378f21(0x1a4))&&(console['log'](_0x378f21(0x255),_0x573c74[0x2],_0x378f21(0x1bb),_0x5a2c20[_0x378f21(0x256)]('Title')),_0x5a2c20['setVisible'](![]));});}),get_analytics_geojson();async function get_analytics_geojson(){const _0x13e811=_0x23b13d;let _0x33a602=await axios[_0x13e811(0x256)](_0x13e811(0x1df));const _0xbd818b=JSON['parse'](JSON[_0x13e811(0x1c7)](_0x33a602[_0x13e811(0x1dd)][_0x13e811(0x1bd)]));let _0x1a621a=0x0,_0x1a76dd=0x0,_0x349f60=0x0,_0x5cca52=0x0,_0x21ccb5=0x0,_0x355aa2=0x0,_0x8a119f=0x0,_0x228c66=0x0;for(let _0x4b05ca=0x0;_0x4b05ca<_0xbd818b['length'];_0x4b05ca++){const _0x174dd0=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)]['population_served'],_0x55c2ca=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x267)],_0x41541c=_0xbd818b[_0x4b05ca]['properties']['water_produced'],_0x13f67b=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x266)],_0x49d3d6=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x218)],_0xd9deff=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x1f7)],_0x37ca96=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x20f)],_0x3e3e3f=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x1a0)];_0x1a621a+=_0x174dd0,_0x1a76dd+=_0x55c2ca,_0x349f60+=_0x41541c,_0x5cca52+=_0x13f67b,_0x21ccb5+=_0x49d3d6,_0x355aa2+=_0xd9deff,_0x8a119f+=_0x37ca96,_0x228c66+=_0x3e3e3f;}let _0x3d04b7=(_0x1a621a/_0x1a76dd*0x64)[_0x13e811(0x247)](0x0),_0x5714e2=((_0x349f60-_0x5cca52)/_0x349f60*0x64)[_0x13e811(0x247)](0x0),_0x5de7cd=(_0x355aa2/_0x21ccb5*0x3e8)[_0x13e811(0x247)](0x0),_0x50dbc4=(_0x228c66/_0x8a119f*0x64)[_0x13e811(0x247)](0x0);$('#national_wc')[_0x13e811(0x226)](_0x3d04b7),$('#national_nrw')[_0x13e811(0x226)](_0x5714e2),$(_0x13e811(0x268))['html'](_0x50dbc4),$(_0x13e811(0x20a))['html'](_0x1a621a[_0x13e811(0x275)]()),$('#population_service_area')[_0x13e811(0x226)](_0x1a76dd['toLocaleString']()),$(_0x13e811(0x1e0))[_0x13e811(0x226)](_0x8a119f['toLocaleString']()),$('#water_produced')[_0x13e811(0x226)](_0x349f60[_0x13e811(0x275)]()),$('#national_legend_title')[_0x13e811(0x1e9)](),console[_0x13e811(0x250)](_0x13e811(0x24b),_0x228c66);const _0x1f72eb='67';}var popup=new ol[(_0x23b13d(0x1fc))]({'element':document[_0x23b13d(0x209)](_0x23b13d(0x277))});map['on'](_0x23b13d(0x1b7),function(_0xb6e7f3){}),$(_0x23b13d(0x1f6))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x22a))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x1dc))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x20c))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x253))['hide'](),$(_0x23b13d(0x1b0))[_0x23b13d(0x1e9)](),$('#metering_ratio_stats')[_0x23b13d(0x1e9)](),$(_0x23b13d(0x257))[_0x23b13d(0x1e9)](),$('#non_revenue_stats')[_0x23b13d(0x1e9)](),map['addControl'](lswitcher);var search=$(_0x23b13d(0x22c))[_0x23b13d(0x21b)]('placeholder','Type\x20To\x20Filter..e.g\x20Water\x20Coverage');function filterLayers(_0x1dc2d3,_0x52af11){const _0x4267e2=_0x23b13d;var _0x2553ed=![];return _0x52af11[_0x4267e2(0x1a1)](function(_0x1387fa){const _0x385358=_0x4267e2;if(_0x1387fa[_0x385358(0x249)]){if(filterLayers(_0x1dc2d3,_0x1387fa[_0x385358(0x249)]()[_0x385358(0x272)]()))_0x1387fa[_0x385358(0x21f)](_0x385358(0x23f),![]),_0x2553ed=!![];else{}}else _0x1dc2d3[_0x385358(0x261)](_0x1387fa[_0x385358(0x256)](_0x385358(0x1a4)))?(_0x1387fa[_0x385358(0x1af)](!![]),_0x2553ed=!![]):_0x1387fa[_0x385358(0x1af)](![]);}),_0x2553ed;}function _0x56ed(){const _0x1014c7=['#legend_introduction_wusa','Vector','#kpi_list','hide','Topography\x20Basemap','rest/services/World_Topo_Map/MapServer\x22>ArcGIS</a>','.staff_productivity','image/png','legendurl','\x27water_coverage\x27','text','Tile','32tSsXwj','layer','replaceAll','layername','#nrw','staff_total','#county_level','.circle_metering_ratio','main_title','Layersss\x20\x20','Overlay','#layers-toggle','select','admin_poly_grey','Topography','Map','setZoom','<b>Non\x20Revenue\x20Water:</b>\x20','\x27KPI\x27|\x27kpi_county\x27|\x27water_coverage\x27','national_indicator_name','item','append','wusa_info_box','getElementById','#population_served','addOverlay','#metering_ratio_county','.circle_staff_productivity','getLayerGroup','active_water_connections','WMSCapabilities','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\x20</div></div>','\x22\x20class=\x22h-4\x20w-4\x20mx-auto\x22>\x20</div>\x20<div\x20class=\x22flex\x20flex-col\x20justify-center\x22>\x20<p\x20class=\x22metric-label\x20text-xs\x22>','1432186RCvKsN','val','WMSGetFeatureInfo','\x27\x20src=\x27','non_revenue_water','active_connections','name','innerHTML','attr','#indicator_title_below','40129bSXxJl','performance_indicators','set','getItem','\x22\x20data-stylename=\x22','http://102.37.157.16:8080/geoserver/WASREB/wms','split','drawlist','10fzGoIa','html','\x22\x20data-size0=\x22','legend-title','localStorage','#water_coverage','\x27\x20width=\x27','<input\x20id=\x22main-search\x22\x20class=\x22form-control\x22\x20style=\x22color:#293445;\x20margin-bottom:0px\x20!important;\x22>','.layerSwitcher','myCat','GeoJSON','application/vnd.ogc.se_inimage','water_utilities_service_area','source','7466830IPKiiu','<b>Water\x20Coverage:</b>\x20','getSource','.circle_non_revenue','Layer','\x27non_revenue_water\x27','<h5\x20class=\x22text-bold\x20text-center\x22><b>','117212ONSeFF','<tr><td\x20style=\x27padding:\x204;\x20margin:4;\x27>','#wusa_attribute_info','./img/icons/metering-ratio-02.svg','water_coverage','noLayer','Fill','<b>Staff\x20Productivity:</b>\x20','fit','metering_ration','#legend_introduction_kpi','./img/icons/non-revenue-06.svg','Resutlts\x20Features','toFixed','<img\x20\x20height=\x27','getLayers','County\x20Boundaries','Natioanl','8LqRcZa','getGeometry','\x27KPI\x27','.layer_list','log','setHeader','1644174nQJYlg','#water_coverage_county','size','LAYERS','get','#non_revenue_county','OnlineResource','legend_kpi','tooltip_county','Title','forEachFeatureAtPixel','getSize','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms','metering_ratio','keyup\x20change','test','\x22\x20class=\x22metric-container\x22>\x20<div\x20class=\x22metric-element\x20border\x20border-slate-300\x22>\x20<img\x20src=\x22','3774876.0657275263,-521207.0057444413','1.1.1','legend-title_kpi','billed_volume','population_service_area','#national_metering_ratio','TileWMS','layertitle','format','Capabilities','<div\x20style=\x27margin-right:30px\x20!important;\x27><h5>','removeClass','getProjection','View','then','getArray','4640706kjFTyh','#legend_introduction','toLocaleString','addClass','popup','toggle','getFeatureInfoUrl','https://server.arcgisonline.com/ArcGIS/rest/services/','#legend_kpi','LegendURL','metered_connections','forEach','http://102.37.157.16:8080/geoserver/WASREB/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WASREB%3Acounty&maxFeatures=50&outputFormat=application%2Fjson&authkey=488c54cd-6392-4d20-953d-b522f791a23e','Capability','title','World_Topo_Map/MapServer/tile/{z}/{y}/{x}','.metering_ratio','361782zpFRhS','addLayer','<div\x20id=\x22kpi_list\x22\x20data-size1=\x22','Stroke','Hapa\x20hapa\x20hapa','Style','.circle_water_coverage','visible','setVisible','#water_coverage_stats','legend','pixel','singleclick','properties','PUBLIC_PORTAL:kpi_county','setPosition','pointermove','</table></div>','11vzfoxS','LayerInfo','LAYER\x20NAME','nrw','features','tooltip_kpi','KPI|','.nrw','read','.water_coverage','getView','</td></tr>','#E43F32','bottom-left','stringify','setOpacity','LayerSwitcher','hidden','MAP\x20LAYERS','parse','Name','<b>County:</b>\x20','OSM','coordinate','Water\x20Coverage','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=wms&version=1.1.1&request=GetCapabilities','#national_level','Tiles\x20©\x20<a\x20href=\x22https://services.arcgisonline.com/ArcGIS/','setItem','WASREB:county','application/json','staff_productivity','PUBLIC_PORTAL:','click','PUBLIC_PORTAL','#nrw_county','data','KPI','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=PUBLIC_PORTAL%3Akpi_county&maxFeatures=2350&outputFormat=application%2Fjson','#active_water_connections','layer_title_bridge','http://102.37.157.16:8080/geoserver','length','getResolution','show'];_0x56ed=function(){return _0x1014c7;};return _0x56ed();}search['on'](_0x23b13d(0x260),function(){var _0x5d3a65=new RegExp(search['val']());filterLayers(_0x5d3a65,layers);}),lswitcher[_0x23b13d(0x251)](search[_0x23b13d(0x256)](0x0)),lswitcher['on'](_0x23b13d(0x278),function(_0x4c26b1){const _0x31a5d4=_0x23b13d,_0x441c0f=root[_0x31a5d4(0x249)]()[_0x31a5d4(0x206)](0x3);}),lswitcher['on'](_0x23b13d(0x224),function(_0x3b4f82){const _0x53d257=_0x23b13d;if(_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)](_0x53d257(0x23f))){if(_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)]('noLayer')){}else{}}else{var _0x880b12=new RegExp(search[_0x53d257(0x214)]());_0x880b12['test'](_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)](_0x53d257(0x1a4)))?$(_0x3b4f82['li'])[_0x53d257(0x1e5)]():$(_0x3b4f82['li'])[_0x53d257(0x1e9)]();}});
+                    </script>
+
+                        <script type="module">
+                            import showProgressBar from './script/show-progress-bar.js'
+
+                            const progressBars = Array.from(document.querySelectorAll('.circular-progress'))
+
+                            // TANUI: make your changes here. Ignore everythig above
+                            //  the lowerThreshold and upperThreshold figures are based on the sector benchmark for each KPI
+                            progressBars.forEach(progressBar =>
+                                showProgressBar({
+                                    lowerThreshold: 80,
+                                    upperThreshold: 90,
+                                    progressBar
+                                })
+                            )
+
+                            const indicatorsToggle = document.querySelector('#indicators-toggle')
+                                const indicatorsContainer = document.querySelector('#indicators-container')
+                                const layersToggle = document.querySelector('#layers-toggle')
+                                const layersContainer = document.querySelector('#layer-items')
+
+                                indicatorsToggle.addEventListener('click', () =>
+                                    toggleDiv(indicatorsContainer)
+                                )
+                                layersToggle.addEventListener('click', () => toggleDiv(layersContainer))
+
+
+                                const toggleDiv = divToToggle => {
+                                    if (divToToggle.classList.contains('hidden')) {
+                                        divToToggle.classList.remove('hidden')
+                                        divToToggle.classList.add('visible')
+                                    } else {
+                                        divToToggle.classList.remove('visible')
+                                        divToToggle.classList.add('hidden')
+                                    }
+                                }
+                 </script>
+    </body>
+</html>
