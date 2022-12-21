@@ -794,7 +794,843 @@
         <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
         <script src="https://unpkg.com/elm-pep"></script>
         <script type="text/javascript">
-                const _0x23b13d=_0x134a;(function(_0x2d78d2,_0x1ba2af){const _0x5b1b28=_0x134a,_0x160744=_0x2d78d2();while(!![]){try{const _0x2c7a6e=parseInt(_0x5b1b28(0x21d))/0x1*(parseInt(_0x5b1b28(0x1f2))/0x2)+-parseInt(_0x5b1b28(0x1a7))/0x3+parseInt(_0x5b1b28(0x23a))/0x4*(parseInt(_0x5b1b28(0x225))/0x5)+-parseInt(_0x5b1b28(0x252))/0x6+parseInt(_0x5b1b28(0x213))/0x7*(-parseInt(_0x5b1b28(0x24c))/0x8)+-parseInt(_0x5b1b28(0x273))/0x9+-parseInt(_0x5b1b28(0x233))/0xa*(-parseInt(_0x5b1b28(0x1b9))/0xb);if(_0x2c7a6e===_0x1ba2af)break;else _0x160744['push'](_0x160744['shift']());}catch(_0x1ca646){_0x160744['push'](_0x160744['shift']());}}}(_0x56ed,0x512d2));let public_url=_0x23b13d(0x1e2),workspace=_0x23b13d(0x1db),bounds=[3400961.92,-340390.53,5257464.46,393404.94],format=_0x23b13d(0x1ed);get_kpi_array(),get_water_service_area_utilities_array();function _0x134a(_0x149f0a,_0x4d67f2){const _0x56edc2=_0x56ed();return _0x134a=function(_0x134ad0,_0x1a8af4){_0x134ad0=_0x134ad0-0x19e;let _0x408a44=_0x56edc2[_0x134ad0];return _0x408a44;},_0x134a(_0x149f0a,_0x4d67f2);}var osmLayer=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1f1))]({'source':new ol[(_0x23b13d(0x232))][(_0x23b13d(0x1cf))]()});let view=new ol[(_0x23b13d(0x270))]({'zoom':0xf,'center':[0.340505,37.310292]}),viewProjection=view[_0x23b13d(0x26f)](),viewResolution=view[_0x23b13d(0x1e4)](),map=new ol[(_0x23b13d(0x201))]({'target':'map','view':view});map[_0x23b13d(0x1c3)]()[_0x23b13d(0x242)](bounds,map[_0x23b13d(0x25d)]());var lswitcher=new ol['control'][(_0x23b13d(0x1c9))]({'target':$(_0x23b13d(0x22d))[_0x23b13d(0x256)](0x0),'selection':!![],'allwaysOnTop':!![],'extent':!![]}),tooltip=document['getElementById']('tooltip'),overlay=new ol[(_0x23b13d(0x1fc))]({'element':tooltip,'offset':[0xa,0x0],'positioning':_0x23b13d(0x1c6)});map[_0x23b13d(0x20b)](overlay);function displayTooltip(_0x5d52b9){const _0x361df8=_0x23b13d;console[_0x361df8(0x250)]('Tooltip',_0x5d52b9);var _0x2f7048=_0x5d52b9[_0x361df8(0x1b2)],_0x1f5182=map[_0x361df8(0x25c)](_0x2f7048,function(_0x47f08f){return _0x47f08f;});overlay[_0x361df8(0x1b6)](_0x5d52b9[_0x361df8(0x1d0)]),tooltip[_0x361df8(0x21a)]=_0x361df8(0x1ab);};$('#county_level')['hide']();var fullscreen=new ol['control']['FullScreen']();map['addControl'](fullscreen);var parser=new ol['format'][(_0x23b13d(0x215))]();const root=map[_0x23b13d(0x20e)]();let county_boundaries_json1=new ol['source']['Vector']({'projection':'EPSG:3857','url':_0x23b13d(0x1a2),'format':new ol['format'][(_0x23b13d(0x22f))]()}),topography=new ol['source']['XYZ']({'attributions':_0x23b13d(0x1d4)+_0x23b13d(0x1eb),'url':_0x23b13d(0x27a)+_0x23b13d(0x1a5)}),county_boundaries=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1e7))]({'displayInLayerSwitcher':![],'visible':!![],'source':county_boundaries_json1,'title':'County\x20Boundaries'}),topography_basemap=new ol['layer'][(_0x23b13d(0x1f1))]({'displayInLayerSwitcher':!![],'visible':!![],'source':topography,'title':_0x23b13d(0x1ea)}),kpi_wms=new ol[(_0x23b13d(0x1f3))]['Tile']({'displayInLayerSwitcher':![],'visible':!![],'source':new ol[(_0x23b13d(0x232))][(_0x23b13d(0x269))]({'url':_0x23b13d(0x25e),'params':{'FORMAT':format,'VERSION':_0x23b13d(0x264),'tiled':!0x0,'STYLES':_0x23b13d(0x23e),'LAYERS':_0x23b13d(0x1b5),'exceptions':'application/vnd.ogc.se_inimage','tilesOrigin':_0x23b13d(0x263)}}),'title':_0x23b13d(0x200)}),labeled_county_boundaries=new ol[(_0x23b13d(0x1f3))][(_0x23b13d(0x1f1))]({'displayInLayerSwitcher':![],'visible':!![],'source':new ol['source'][(_0x23b13d(0x269))]({'url':'http://102.37.157.16:8080/geoserver/WASREB/wms','params':{'FORMAT':format,'VERSION':_0x23b13d(0x264),'tiled':!0x0,'STYLES':_0x23b13d(0x1ff),'LAYERS':_0x23b13d(0x1d6),'exceptions':_0x23b13d(0x230),'tilesOrigin':_0x23b13d(0x263)}})});map[_0x23b13d(0x1a8)](topography_basemap),map[_0x23b13d(0x1a8)](kpi_wms),county_boundaries[_0x23b13d(0x1c8)](0.5),map['addLayer'](county_boundaries),window['localStorage'][_0x23b13d(0x1d5)](_0x23b13d(0x22e),''),$('.layer_list')[_0x23b13d(0x276)]('hidden')[_0x23b13d(0x26e)](_0x23b13d(0x1e5)),document[_0x23b13d(0x209)]('legend_kpi')[_0x23b13d(0x21a)]='<img\x20\x20height=\x27200\x27\x20width=\x27120\x27\x20src=\x27http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms?Service=WMS&REQUEST=GetLegendGraphic&STYLE=water_coverage&VERSION=1.0.0&FORMAT=image/png&WIDTH=50&HEIGHT=30&LAYER=kpi_wsp_v\x27>',document['getElementById'](_0x23b13d(0x265))[_0x23b13d(0x21a)]=_0x23b13d(0x1d1),document[_0x23b13d(0x209)]('national_indicator_name')[_0x23b13d(0x21a)]=_0x23b13d(0x1d1),document[_0x23b13d(0x209)](_0x23b13d(0x1fa))[_0x23b13d(0x21a)]='INDICATORS',$(_0x23b13d(0x1ad))[_0x23b13d(0x276)]('show')[_0x23b13d(0x26e)](_0x23b13d(0x1ca)),window[_0x23b13d(0x229)][_0x23b13d(0x1d5)]('LayerInfo',_0x23b13d(0x204)),$(_0x23b13d(0x244))['show'](),$(_0x23b13d(0x1e6))[_0x23b13d(0x1e9)](),$(document)['on'](_0x23b13d(0x1da),_0x23b13d(0x1fd),function(){const _0x396bfe=_0x23b13d;$(_0x396bfe(0x1d3))[_0x396bfe(0x1e9)](),$(_0x396bfe(0x19e))[_0x396bfe(0x1e9)](),$(_0x396bfe(0x1f8))[_0x396bfe(0x1e9)](),$('#legend_introduction_wusa')[_0x396bfe(0x1e5)](),$(_0x396bfe(0x244))[_0x396bfe(0x1e9)](),document[_0x396bfe(0x209)](_0x396bfe(0x1fa))['innerHTML']='LAYERS',map['getLayers']()[_0x396bfe(0x1a1)](function(_0x56bb2b){const _0x1280dd=_0x396bfe,_0x468951=localStorage[_0x1280dd(0x220)](_0x1280dd(0x1e1));_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x1ae))&&_0x56bb2b['get'](_0x1280dd(0x1a4))!=_0x1280dd(0x1ea)&&_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x1a4))!=_0x1280dd(0x24a)&&(console[_0x1280dd(0x250)](_0x1280dd(0x255),_0x56bb2b[_0x1280dd(0x256)]('visible'),'LAYER\x20NAME',_0x56bb2b[_0x1280dd(0x256)](_0x1280dd(0x219))),_0x56bb2b[_0x1280dd(0x1af)](![]));}),map[_0x396bfe(0x1a8)](county_boundaries);}),$(document)['on']('click',_0x23b13d(0x1e8),function(){const _0x5b1d39=_0x23b13d;document[_0x5b1d39(0x209)](_0x5b1d39(0x1fa))[_0x5b1d39(0x21a)]='INDICATORS';const _0x5d4d8f=localStorage[_0x5b1d39(0x220)](_0x5b1d39(0x1ba));window[_0x5b1d39(0x229)][_0x5b1d39(0x1d5)](_0x5b1d39(0x1e1),$(this)[_0x5b1d39(0x1dd)]('layertitle')),$(_0x5b1d39(0x24f))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),map['getLayers']()[_0x5b1d39(0x1a1)](function(_0x2742f4){const _0x2fe468=_0x5b1d39,_0x31792e=localStorage[_0x2fe468(0x220)](_0x2fe468(0x1e1));_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1ae))&&_0x2742f4['get'](_0x2fe468(0x1a4))!=_0x2fe468(0x24a)&&_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1a4))!=_0x2fe468(0x1ea)&&(console[_0x2fe468(0x250)](_0x2fe468(0x255),_0x2742f4[_0x2fe468(0x256)](_0x2fe468(0x1ae)),_0x2fe468(0x1bb),_0x2742f4[_0x2fe468(0x256)]('name')),_0x2742f4[_0x2fe468(0x1af)](![]));});let _0x3298c4=new ol[(_0x5b1d39(0x1f3))][(_0x5b1d39(0x1f1))]({'displayInLayerSwitcher':![],'visible':!![],'source':new ol[(_0x5b1d39(0x232))]['TileWMS']({'url':_0x5b1d39(0x25e),'params':{'FORMAT':format,'VERSION':_0x5b1d39(0x264),'tiled':!0x0,'STYLES':$(this)[_0x5b1d39(0x1dd)]('stylename'),'LAYERS':_0x5b1d39(0x1d9)+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1f5)),'exceptions':_0x5b1d39(0x230),'tilesOrigin':_0x5b1d39(0x263)}}),'title':$(this)[_0x5b1d39(0x1dd)]('layertitle')}),_0x3e440c=map[_0x5b1d39(0x1a8)](_0x3298c4);window[_0x5b1d39(0x229)][_0x5b1d39(0x1d5)](_0x5b1d39(0x1ba),_0x5b1d39(0x1bf)+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1f5))+'|'+$(this)[_0x5b1d39(0x1dd)]('stylename')+''),document[_0x5b1d39(0x209)](_0x5b1d39(0x205))[_0x5b1d39(0x21a)]=$(this)['data'](_0x5b1d39(0x26a))[_0x5b1d39(0x1f4)]('_','\x20');if($(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x23e))$(_0x5b1d39(0x1c2))['addClass']('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1c0))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass']('show'),$('.metering_ratio')[_0x5b1d39(0x276)]('hidden')[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)]('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1f9))['addClass'](_0x5b1d39(0x1ca))['removeClass']('show'),$('.circle_staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5));else{if($(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x217))$(_0x5b1d39(0x1c2))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))[_0x5b1d39(0x276)]('show')[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1a6))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$('.circle_water_coverage')['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))['removeClass'](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x20d))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5));else{if($(this)['data']('layertitle')==_0x5b1d39(0x25f))$(_0x5b1d39(0x1a6))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)]('hidden'),$(_0x5b1d39(0x1c2))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show'),$('.staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show'),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))['removeClass'](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x20d))['addClass'](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)]('show');else $(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))==_0x5b1d39(0x1d8)&&($(_0x5b1d39(0x1a6))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c2))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1c0))['addClass']('hidden')['removeClass'](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1ec))[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)),$(_0x5b1d39(0x1ad))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x236))[_0x5b1d39(0x276)]('hidden')[_0x5b1d39(0x26e)](_0x5b1d39(0x1e5)),$(_0x5b1d39(0x1f9))[_0x5b1d39(0x276)](_0x5b1d39(0x1ca))['removeClass']('show'),$('.circle_staff_productivity')[_0x5b1d39(0x276)](_0x5b1d39(0x1e5))[_0x5b1d39(0x26e)](_0x5b1d39(0x1ca)));}}document[_0x5b1d39(0x209)](_0x5b1d39(0x259))[_0x5b1d39(0x21a)]='<img\x20\x20height=\x27200\x27\x20width=\x27120\x27\x20src=\x27'+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x1ee))+'\x27>',document[_0x5b1d39(0x209)](_0x5b1d39(0x265))[_0x5b1d39(0x21a)]=''+$(this)[_0x5b1d39(0x1dd)](_0x5b1d39(0x26a))[_0x5b1d39(0x1f4)]('_','\x20')+'';});async function get_kpi_array(){const _0x2cd904=_0x23b13d;await fetch(_0x2cd904(0x1d2))[_0x2cd904(0x271)](function(_0x323e31){const _0x13e6a8=_0x2cd904;return _0x323e31[_0x13e6a8(0x1f0)]();})['then'](function(_0xe37955){const _0x179b44=_0x2cd904;var _0x268d5b=new ol[(_0x179b44(0x26b))][(_0x179b44(0x210))](),_0x5ef402=_0x268d5b[_0x179b44(0x1c1)](_0xe37955),_0x251341=_0x5ef402[_0x179b44(0x1a3)][_0x179b44(0x237)][_0x179b44(0x237)];return _0x251341;})[_0x2cd904(0x271)](function(_0x4386cb){const _0xfcd304=_0x2cd904;window[_0xfcd304(0x229)][_0xfcd304(0x1d5)](_0xfcd304(0x21e),JSON[_0xfcd304(0x1c7)](_0x4386cb));let _0x24a358=[];var _0x498287=$(_0xfcd304(0x21c));let _0x36d0e9;for(var _0x4ec6b9=0x0;_0x4ec6b9<_0x4386cb[_0xfcd304(0x1e3)];_0x4ec6b9++){let _0x467815=_0x4386cb[_0x4ec6b9][_0xfcd304(0x1ac)];_0x498287['append'](_0xfcd304(0x239)+_0x4386cb[_0x4ec6b9][_0xfcd304(0x25b)][_0xfcd304(0x1f4)]('_','\x20')+'</b></h5><br>');for(var _0x47e565=0x0;_0x47e565<_0x467815[_0xfcd304(0x1e3)];_0x47e565++){console[_0xfcd304(0x250)](_0xfcd304(0x1cd),_0x467815[_0x47e565]);if(_0x467815[_0x47e565]['Title']==_0xfcd304(0x217))_0x36d0e9=_0xfcd304(0x245);else{if(_0x467815[_0x47e565][_0xfcd304(0x25b)]==_0xfcd304(0x1d8))_0x36d0e9='./img/icons/staff-productivity-03.svg';else{if(_0x467815[_0x47e565]['Title']=='metering_ratio')_0x36d0e9=_0xfcd304(0x23d);else _0x467815[_0x47e565][_0xfcd304(0x25b)]==_0xfcd304(0x23e)&&(_0x36d0e9='./img/icons/drinking-water-01.svg');}}console['log'](_0xfcd304(0x1fb)+_0x4386cb[_0x4ec6b9]['Name']+'',_0x467815[_0x47e565][_0xfcd304(0x25b)]),_0x467815[_0x47e565][_0xfcd304(0x25b)]!=_0xfcd304(0x1d8)&&_0x498287[_0xfcd304(0x207)](_0xfcd304(0x1a9)+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0][_0xfcd304(0x254)][0x1]+_0xfcd304(0x227)+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0][_0xfcd304(0x254)][0x0]+'\x22\x20data-legendurl=\x22'+_0x467815[_0x47e565][_0xfcd304(0x19f)][0x0]['OnlineResource']+'\x22\x20data-layertitle=\x22'+_0x467815[_0x47e565][_0xfcd304(0x25b)]+_0xfcd304(0x221)+_0x467815[_0x47e565][_0xfcd304(0x1cd)]+'\x22\x20data-layername=\x22'+_0x4386cb[_0x4ec6b9][_0xfcd304(0x1cd)]+_0xfcd304(0x262)+_0x36d0e9+_0xfcd304(0x212)+_0x467815[_0x47e565][_0xfcd304(0x25b)]['replaceAll']('_','\x20')+_0xfcd304(0x211));}}})[_0x2cd904(0x271)](function(_0x1bbfa5){});}async function get_water_service_area_utilities_array(){const _0x277112=_0x23b13d;await fetch('http://102.37.157.16:8080/geoserver/WASREB/ows?service=wms&version=1.1.1&request=GetCapabilities')[_0x277112(0x271)](function(_0x352e92){const _0x3448a5=_0x277112;return _0x352e92[_0x3448a5(0x1f0)]();})['then'](function(_0x248976){const _0x1526de=_0x277112;var _0x4de706=new ol[(_0x1526de(0x26b))][(_0x1526de(0x210))](),_0x3c8dee=_0x4de706[_0x1526de(0x1c1)](_0x248976),_0x22df58=_0x3c8dee[_0x1526de(0x1a3)][_0x1526de(0x237)]['Layer'];return _0x22df58;})[_0x277112(0x271)](function(_0x2df159){const _0x4c87a3=_0x277112;window[_0x4c87a3(0x229)][_0x4c87a3(0x1d5)]('water_utilities_service_area',JSON[_0x4c87a3(0x1c7)](_0x2df159));let _0x38aeb1=[];for(var _0x3c80a9=0x0;_0x3c80a9<_0x2df159[_0x4c87a3(0x1e3)];_0x3c80a9++){map[_0x4c87a3(0x1a8)](new ol[(_0x4c87a3(0x1f3))][(_0x4c87a3(0x1f1))]({'zIndex':0x9,'visible':![],'source':new ol['source'][(_0x4c87a3(0x269))]({'url':_0x4c87a3(0x222),'params':{'FORMAT':format,'VERSION':_0x4c87a3(0x264),'tiled':!0x0,'STYLES':_0x2df159[_0x3c80a9][_0x4c87a3(0x1ac)][0x0][_0x4c87a3(0x1cd)],'LAYERS':'PUBLIC_PORTAL:'+_0x2df159[_0x3c80a9][_0x4c87a3(0x1cd)],'exceptions':'application/vnd.ogc.se_inimage','tilesOrigin':_0x4c87a3(0x263)}}),'title':_0x2df159[_0x3c80a9][_0x4c87a3(0x25b)]}));}return _0x38aeb1;})[_0x277112(0x271)](function(_0x5be42b){});}map['on'](_0x23b13d(0x1b7),function(_0x5a360f){const _0x3796eb=_0x23b13d;$(_0x3796eb(0x274))[_0x3796eb(0x1e9)](),displayTooltip;const _0x36f46e=window[_0x3796eb(0x229)][_0x3796eb(0x220)]('map_clicked');if(_0x36f46e=='on'){const _0x308ad2=map[_0x3796eb(0x20e)]()[_0x3796eb(0x249)]()[_0x3796eb(0x272)]();for(let _0x55c367=0x0;_0x55c367<_0x308ad2['length'];_0x55c367++){let _0x5494ec=_0x308ad2[_0x55c367];if(_0x5494ec[_0x3796eb(0x256)]('visible')&&_0x5494ec['get']('title')!='Topography\x20Basemap'&&_0x5494ec['get'](_0x3796eb(0x1a4))!=_0x3796eb(0x24a)){var _0x4a3d8d=_0x5494ec[_0x3796eb(0x235)]()[_0x3796eb(0x279)](_0x5a360f[_0x3796eb(0x1d0)],viewResolution,viewProjection,{'INFO_FORMAT':_0x3796eb(0x1d7)});$['ajax']({'url':_0x4a3d8d,'dataType':'json','success':function(_0x12fa8c){const _0x9310e5=_0x3796eb;var _0x4f947c=_0x12fa8c;if(_0x4f947c[_0x9310e5(0x1bd)][_0x9310e5(0x1e3)]!=0x0){console[_0x9310e5(0x250)](_0x9310e5(0x246),_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]),$(_0x9310e5(0x23c))[_0x9310e5(0x226)](_0x4f947c['features'][0x0]['properties']);const _0x182fdd=JSON[_0x9310e5(0x1cc)](JSON[_0x9310e5(0x1c7)](_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]));let _0x212a9b=_0x9310e5(0x26d)+_0x5494ec['get'](_0x9310e5(0x1a4))+'</h5><br><table\x20id=\x27layer_info_table\x27\x20class=\x27text-left\x27\x20style=\x27margin-left:\x2010px\x20!important;;\x20font-size:12px!important;\x27>';for(let _0x5fd5cc in _0x182fdd){console['log'](_0x182fdd[_0x5fd5cc]),_0x182fdd[_0x5fd5cc]!='null'&&(_0x212a9b+=_0x9310e5(0x23b)+_0x5fd5cc+'</td><td\x20style=\x27padding:\x204;\x20margin:4;\x27>'+_0x182fdd[_0x5fd5cc]+_0x9310e5(0x1c4));}_0x212a9b+=_0x9310e5(0x1b8),document[_0x9310e5(0x209)](_0x9310e5(0x208))[_0x9310e5(0x21a)]=_0x212a9b,$(_0x9310e5(0x1f8))[_0x9310e5(0x1e5)]();const _0x1a62ee=localStorage[_0x9310e5(0x220)](_0x9310e5(0x1ba))['split']('|');if(_0x1a62ee[0x0]==_0x9310e5(0x24e)||_0x1a62ee[0x0]==_0x9310e5(0x1de)){document[_0x9310e5(0x209)](_0x9310e5(0x25a))[_0x9310e5(0x21a)]=_0x9310e5(0x1ce)+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)]['name']+'';if(_0x1a62ee[0x2]==_0x9310e5(0x1ef)||_0x1a62ee[0x2]=='water_coverage')document['getElementById'](_0x9310e5(0x1be))[_0x9310e5(0x21a)]=_0x9310e5(0x234)+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x23e)]+'';else{if(_0x1a62ee[0x2]==_0x9310e5(0x238)||_0x1a62ee[0x2]==_0x9310e5(0x217))document[_0x9310e5(0x209)](_0x9310e5(0x1be))[_0x9310e5(0x21a)]=_0x9310e5(0x203)+_0x4f947c['features'][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x1bc)]+'';else{if(_0x1a62ee[0x2]=='\x27metering_ration\x27'||_0x1a62ee[0x2]==_0x9310e5(0x25f))document['getElementById'](_0x9310e5(0x1be))[_0x9310e5(0x21a)]='<b>Metering\x20Ratio:</b>\x20'+_0x4f947c[_0x9310e5(0x1bd)][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x243)]+'';else(_0x1a62ee[0x2]=='\x27staff_productivity\x27'||_0x1a62ee[0x2]==_0x9310e5(0x1d8))&&(document[_0x9310e5(0x209)](_0x9310e5(0x1be))['innerHTML']=_0x9310e5(0x241)+_0x4f947c['features'][0x0][_0x9310e5(0x1b4)][_0x9310e5(0x1d8)]+'');}}}}}});}}}}),map['on'](_0x23b13d(0x1b3),function(_0x132c36){const _0x2a3198=_0x23b13d;window[_0x2a3198(0x229)][_0x2a3198(0x1d5)]('map_clicked','on'),$(_0x2a3198(0x274))[_0x2a3198(0x1e9)]();const _0x59b9f5=window[_0x2a3198(0x229)][_0x2a3198(0x220)](_0x2a3198(0x1ba)),_0x5327ac=_0x59b9f5['split']('|');console['log']('LayerInfo',_0x5327ac[0x2]);let _0x4247d6=map[_0x2a3198(0x25c)](_0x132c36[_0x2a3198(0x1b2)],function(_0x3fb006){return _0x3fb006;});map[_0x2a3198(0x1c3)]()[_0x2a3198(0x242)](_0x4247d6[_0x2a3198(0x24d)]()),map[_0x2a3198(0x1c3)]()[_0x2a3198(0x202)](0x9);var _0x1ebf84=new ol['style'][(_0x2a3198(0x1ac))]({'stroke':new ol['style'][(_0x2a3198(0x1aa))]({'color':_0x2a3198(0x1c5),'width':0x3,'opacity':0x1}),'fill':new ol['style'][(_0x2a3198(0x240))]({'color':[0xf5,0x8d,0x42]}),'zIndex':0x1});}),lswitcher['on'](_0x23b13d(0x1fe),function(_0x3a6a6c){const _0x18fd05=_0x23b13d;$(_0x18fd05(0x1d3))['hide'](),$(_0x18fd05(0x1f8))[_0x18fd05(0x1e9)](),$(_0x18fd05(0x19e))['hide'](),document[_0x18fd05(0x209)]('wusa_info_box')[_0x18fd05(0x21a)]='',$('#legend_introduction_wusa')[_0x18fd05(0x1e5)](),$(_0x18fd05(0x244))[_0x18fd05(0x1e9)]();let _0x2bddca=_0x3a6a6c[_0x18fd05(0x1f3)];document[_0x18fd05(0x209)](_0x18fd05(0x1fa))['innerHTML']=_0x18fd05(0x1cb);const _0x366c0c=window[_0x18fd05(0x229)]['getItem'](_0x18fd05(0x231));let _0x2b168e=JSON[_0x18fd05(0x1cc)](_0x366c0c),_0x22cd5e=_0x2b168e['find'](_0x52cd3b=>{const _0x93b553=_0x18fd05;return _0x52cd3b[_0x93b553(0x25b)]==''+_0x3a6a6c[_0x93b553(0x1f3)][_0x93b553(0x256)]('title')+'';});console[_0x18fd05(0x250)](_0x18fd05(0x26c),_0x22cd5e[_0x18fd05(0x1cd)]),document[_0x18fd05(0x209)](_0x18fd05(0x1b1))['innerHTML']=_0x18fd05(0x248)+_0x22cd5e[_0x18fd05(0x1ac)][0x0][_0x18fd05(0x19f)][0x0][_0x18fd05(0x254)][0x0]+_0x18fd05(0x22b)+_0x22cd5e[_0x18fd05(0x1ac)][0x0][_0x18fd05(0x19f)][0x0]['size'][0x1]+_0x18fd05(0x216)+_0x22cd5e['Style'][0x0][_0x18fd05(0x19f)][0x0][_0x18fd05(0x258)]+'\x27>',document['getElementById'](_0x18fd05(0x228))[_0x18fd05(0x21a)]=''+_0x3a6a6c[_0x18fd05(0x1f3)][_0x18fd05(0x256)](_0x18fd05(0x1a4))+'';const _0x1debcc=window['localStorage'][_0x18fd05(0x220)](_0x18fd05(0x1ba)),_0x573c74=_0x1debcc[_0x18fd05(0x223)]('|');console[_0x18fd05(0x250)](_0x18fd05(0x1ba),_0x573c74[0x2]),_0x573c74[0x0]=='KPI'&&map[_0x18fd05(0x249)]()[_0x18fd05(0x1a1)](function(_0x5a2c20){const _0x378f21=_0x18fd05;_0x5a2c20[_0x378f21(0x256)](_0x378f21(0x1ae))&&_0x573c74[0x2]==_0x5a2c20[_0x378f21(0x256)](_0x378f21(0x1a4))&&(console['log'](_0x378f21(0x255),_0x573c74[0x2],_0x378f21(0x1bb),_0x5a2c20[_0x378f21(0x256)]('Title')),_0x5a2c20['setVisible'](![]));});}),get_analytics_geojson();async function get_analytics_geojson(){const _0x13e811=_0x23b13d;let _0x33a602=await axios[_0x13e811(0x256)](_0x13e811(0x1df));const _0xbd818b=JSON['parse'](JSON[_0x13e811(0x1c7)](_0x33a602[_0x13e811(0x1dd)][_0x13e811(0x1bd)]));let _0x1a621a=0x0,_0x1a76dd=0x0,_0x349f60=0x0,_0x5cca52=0x0,_0x21ccb5=0x0,_0x355aa2=0x0,_0x8a119f=0x0,_0x228c66=0x0;for(let _0x4b05ca=0x0;_0x4b05ca<_0xbd818b['length'];_0x4b05ca++){const _0x174dd0=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)]['population_served'],_0x55c2ca=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x267)],_0x41541c=_0xbd818b[_0x4b05ca]['properties']['water_produced'],_0x13f67b=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x266)],_0x49d3d6=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x218)],_0xd9deff=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x1f7)],_0x37ca96=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x20f)],_0x3e3e3f=_0xbd818b[_0x4b05ca][_0x13e811(0x1b4)][_0x13e811(0x1a0)];_0x1a621a+=_0x174dd0,_0x1a76dd+=_0x55c2ca,_0x349f60+=_0x41541c,_0x5cca52+=_0x13f67b,_0x21ccb5+=_0x49d3d6,_0x355aa2+=_0xd9deff,_0x8a119f+=_0x37ca96,_0x228c66+=_0x3e3e3f;}let _0x3d04b7=(_0x1a621a/_0x1a76dd*0x64)[_0x13e811(0x247)](0x0),_0x5714e2=((_0x349f60-_0x5cca52)/_0x349f60*0x64)[_0x13e811(0x247)](0x0),_0x5de7cd=(_0x355aa2/_0x21ccb5*0x3e8)[_0x13e811(0x247)](0x0),_0x50dbc4=(_0x228c66/_0x8a119f*0x64)[_0x13e811(0x247)](0x0);$('#national_wc')[_0x13e811(0x226)](_0x3d04b7),$('#national_nrw')[_0x13e811(0x226)](_0x5714e2),$(_0x13e811(0x268))['html'](_0x50dbc4),$(_0x13e811(0x20a))['html'](_0x1a621a[_0x13e811(0x275)]()),$('#population_service_area')[_0x13e811(0x226)](_0x1a76dd['toLocaleString']()),$(_0x13e811(0x1e0))[_0x13e811(0x226)](_0x8a119f['toLocaleString']()),$('#water_produced')[_0x13e811(0x226)](_0x349f60[_0x13e811(0x275)]()),$('#national_legend_title')[_0x13e811(0x1e9)](),console[_0x13e811(0x250)](_0x13e811(0x24b),_0x228c66);const _0x1f72eb='67';}var popup=new ol[(_0x23b13d(0x1fc))]({'element':document[_0x23b13d(0x209)](_0x23b13d(0x277))});map['on'](_0x23b13d(0x1b7),function(_0xb6e7f3){}),$(_0x23b13d(0x1f6))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x22a))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x1dc))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x20c))[_0x23b13d(0x1e9)](),$(_0x23b13d(0x253))['hide'](),$(_0x23b13d(0x1b0))[_0x23b13d(0x1e9)](),$('#metering_ratio_stats')[_0x23b13d(0x1e9)](),$(_0x23b13d(0x257))[_0x23b13d(0x1e9)](),$('#non_revenue_stats')[_0x23b13d(0x1e9)](),map['addControl'](lswitcher);var search=$(_0x23b13d(0x22c))[_0x23b13d(0x21b)]('placeholder','Type\x20To\x20Filter..e.g\x20Water\x20Coverage');function filterLayers(_0x1dc2d3,_0x52af11){const _0x4267e2=_0x23b13d;var _0x2553ed=![];return _0x52af11[_0x4267e2(0x1a1)](function(_0x1387fa){const _0x385358=_0x4267e2;if(_0x1387fa[_0x385358(0x249)]){if(filterLayers(_0x1dc2d3,_0x1387fa[_0x385358(0x249)]()[_0x385358(0x272)]()))_0x1387fa[_0x385358(0x21f)](_0x385358(0x23f),![]),_0x2553ed=!![];else{}}else _0x1dc2d3[_0x385358(0x261)](_0x1387fa[_0x385358(0x256)](_0x385358(0x1a4)))?(_0x1387fa[_0x385358(0x1af)](!![]),_0x2553ed=!![]):_0x1387fa[_0x385358(0x1af)](![]);}),_0x2553ed;}function _0x56ed(){const _0x1014c7=['#legend_introduction_wusa','Vector','#kpi_list','hide','Topography\x20Basemap','rest/services/World_Topo_Map/MapServer\x22>ArcGIS</a>','.staff_productivity','image/png','legendurl','\x27water_coverage\x27','text','Tile','32tSsXwj','layer','replaceAll','layername','#nrw','staff_total','#county_level','.circle_metering_ratio','main_title','Layersss\x20\x20','Overlay','#layers-toggle','select','admin_poly_grey','Topography','Map','setZoom','<b>Non\x20Revenue\x20Water:</b>\x20','\x27KPI\x27|\x27kpi_county\x27|\x27water_coverage\x27','national_indicator_name','item','append','wusa_info_box','getElementById','#population_served','addOverlay','#metering_ratio_county','.circle_staff_productivity','getLayerGroup','active_water_connections','WMSCapabilities','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\x20</div></div>','\x22\x20class=\x22h-4\x20w-4\x20mx-auto\x22>\x20</div>\x20<div\x20class=\x22flex\x20flex-col\x20justify-center\x22>\x20<p\x20class=\x22metric-label\x20text-xs\x22>','1432186RCvKsN','val','WMSGetFeatureInfo','\x27\x20src=\x27','non_revenue_water','active_connections','name','innerHTML','attr','#indicator_title_below','40129bSXxJl','performance_indicators','set','getItem','\x22\x20data-stylename=\x22','http://102.37.157.16:8080/geoserver/WASREB/wms','split','drawlist','10fzGoIa','html','\x22\x20data-size0=\x22','legend-title','localStorage','#water_coverage','\x27\x20width=\x27','<input\x20id=\x22main-search\x22\x20class=\x22form-control\x22\x20style=\x22color:#293445;\x20margin-bottom:0px\x20!important;\x22>','.layerSwitcher','myCat','GeoJSON','application/vnd.ogc.se_inimage','water_utilities_service_area','source','7466830IPKiiu','<b>Water\x20Coverage:</b>\x20','getSource','.circle_non_revenue','Layer','\x27non_revenue_water\x27','<h5\x20class=\x22text-bold\x20text-center\x22><b>','117212ONSeFF','<tr><td\x20style=\x27padding:\x204;\x20margin:4;\x27>','#wusa_attribute_info','./img/icons/metering-ratio-02.svg','water_coverage','noLayer','Fill','<b>Staff\x20Productivity:</b>\x20','fit','metering_ration','#legend_introduction_kpi','./img/icons/non-revenue-06.svg','Resutlts\x20Features','toFixed','<img\x20\x20height=\x27','getLayers','County\x20Boundaries','Natioanl','8LqRcZa','getGeometry','\x27KPI\x27','.layer_list','log','setHeader','1644174nQJYlg','#water_coverage_county','size','LAYERS','get','#non_revenue_county','OnlineResource','legend_kpi','tooltip_county','Title','forEachFeatureAtPixel','getSize','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms','metering_ratio','keyup\x20change','test','\x22\x20class=\x22metric-container\x22>\x20<div\x20class=\x22metric-element\x20border\x20border-slate-300\x22>\x20<img\x20src=\x22','3774876.0657275263,-521207.0057444413','1.1.1','legend-title_kpi','billed_volume','population_service_area','#national_metering_ratio','TileWMS','layertitle','format','Capabilities','<div\x20style=\x27margin-right:30px\x20!important;\x27><h5>','removeClass','getProjection','View','then','getArray','4640706kjFTyh','#legend_introduction','toLocaleString','addClass','popup','toggle','getFeatureInfoUrl','https://server.arcgisonline.com/ArcGIS/rest/services/','#legend_kpi','LegendURL','metered_connections','forEach','http://102.37.157.16:8080/geoserver/WASREB/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WASREB%3Acounty&maxFeatures=50&outputFormat=application%2Fjson&authkey=488c54cd-6392-4d20-953d-b522f791a23e','Capability','title','World_Topo_Map/MapServer/tile/{z}/{y}/{x}','.metering_ratio','361782zpFRhS','addLayer','<div\x20id=\x22kpi_list\x22\x20data-size1=\x22','Stroke','Hapa\x20hapa\x20hapa','Style','.circle_water_coverage','visible','setVisible','#water_coverage_stats','legend','pixel','singleclick','properties','PUBLIC_PORTAL:kpi_county','setPosition','pointermove','</table></div>','11vzfoxS','LayerInfo','LAYER\x20NAME','nrw','features','tooltip_kpi','KPI|','.nrw','read','.water_coverage','getView','</td></tr>','#E43F32','bottom-left','stringify','setOpacity','LayerSwitcher','hidden','MAP\x20LAYERS','parse','Name','<b>County:</b>\x20','OSM','coordinate','Water\x20Coverage','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=wms&version=1.1.1&request=GetCapabilities','#national_level','Tiles\x20©\x20<a\x20href=\x22https://services.arcgisonline.com/ArcGIS/','setItem','WASREB:county','application/json','staff_productivity','PUBLIC_PORTAL:','click','PUBLIC_PORTAL','#nrw_county','data','KPI','http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=PUBLIC_PORTAL%3Akpi_county&maxFeatures=2350&outputFormat=application%2Fjson','#active_water_connections','layer_title_bridge','http://102.37.157.16:8080/geoserver','length','getResolution','show'];_0x56ed=function(){return _0x1014c7;};return _0x56ed();}search['on'](_0x23b13d(0x260),function(){var _0x5d3a65=new RegExp(search['val']());filterLayers(_0x5d3a65,layers);}),lswitcher[_0x23b13d(0x251)](search[_0x23b13d(0x256)](0x0)),lswitcher['on'](_0x23b13d(0x278),function(_0x4c26b1){const _0x31a5d4=_0x23b13d,_0x441c0f=root[_0x31a5d4(0x249)]()[_0x31a5d4(0x206)](0x3);}),lswitcher['on'](_0x23b13d(0x224),function(_0x3b4f82){const _0x53d257=_0x23b13d;if(_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)](_0x53d257(0x23f))){if(_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)]('noLayer')){}else{}}else{var _0x880b12=new RegExp(search[_0x53d257(0x214)]());_0x880b12['test'](_0x3b4f82[_0x53d257(0x1f3)][_0x53d257(0x256)](_0x53d257(0x1a4)))?$(_0x3b4f82['li'])[_0x53d257(0x1e5)]():$(_0x3b4f82['li'])[_0x53d257(0x1e9)]();}});
+                let public_url = 'http://102.37.157.16:8080/geoserver';
+                let workspace = 'PUBLIC_PORTAL';
+                      
+                let bounds = [ 3400961.92,-340390.53,5257464.46,393404.94];
+                let format  = 'image/png';
+
+                        get_kpi_array()
+                        get_water_service_area_utilities_array()
+
+                        var osmLayer = new ol.layer.Tile({
+                                source: new ol.source.OSM()
+                            });
+
+                            
+                            let view = new ol.View({ zoom: 15, center: [0.340505, 37.310292] });
+                            let viewProjection = view.getProjection();
+                            let viewResolution = view.getResolution();
+                            // The Map
+                            let map = new ol.Map({
+                            target: 'map',
+                            view: view
+                            });
+
+
+                            map.getView().fit(bounds, map.getSize());
+                            // Add a layer switcher outside the map
+                            var lswitcher = new ol.control.LayerSwitcher({
+                            target:$(".layerSwitcher").get(0),
+                            selection:true,
+                            allwaysOnTop:true,
+                            extent:true
+
+                            });
+
+                            var tooltip = document.getElementById('tooltip');
+                            var overlay = new ol.Overlay({
+                            element: tooltip,
+                            offset: [10, 0],
+                            positioning: 'bottom-left'
+                            });
+                            map.addOverlay(overlay);
+
+                            function displayTooltip(evt) {
+                            console.log("Tooltip", evt);
+                            var pixel = evt.pixel;
+                            var feature = map.forEachFeatureAtPixel(pixel, function(feature) {
+                                return feature;
+                            });
+                            //tooltip.style.display = feature ? '' : 'none';
+                            //if (feature) {
+                                overlay.setPosition(evt.coordinate);
+                                tooltip.innerHTML = 'Hapa hapa hapa';
+                            //}
+                            };
+
+
+                            // Show or hide elements
+                            $("#county_level").hide();
+
+
+                            var fullscreen = new ol.control.FullScreen();
+                            map.addControl(fullscreen);
+
+                            var parser = new ol.format.WMSGetFeatureInfo();
+                            const root = map.getLayerGroup();
+
+                            let county_boundaries_json1 = new ol.source.Vector({
+                                                                projection : 'EPSG:3857',
+                                                                url: 'http://102.37.157.16:8080/geoserver/WASREB/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WASREB%3Acounty&maxFeatures=50&outputFormat=application%2Fjson&authkey=488c54cd-6392-4d20-953d-b522f791a23e',
+                                                                format: new ol.format.GeoJSON()
+                                                            });
+
+                            let topography = new ol.source.XYZ({
+                                        attributions:
+                                        'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+                                        'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+                                        url:
+                                        'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+                                        'World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                            });                               
+                            
+                            //Default Map layers
+                            
+                            let county_boundaries = new ol.layer.Vector({ displayInLayerSwitcher: false, visible: true, source: county_boundaries_json1, title:'County Boundaries' });
+                            let topography_basemap = new ol.layer.Tile({ displayInLayerSwitcher: true, visible: true, source: topography, title:'Topography Basemap' });
+                            let kpi_wms = new ol.layer.Tile({ displayInLayerSwitcher: false, visible: true, source: new ol.source.TileWMS({url:"http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms",params:{FORMAT:format,VERSION:"1.1.1",tiled:!0,STYLES:'water_coverage',LAYERS:"PUBLIC_PORTAL:kpi_county",exceptions:"application/vnd.ogc.se_inimage",tilesOrigin:"3774876.0657275263,-521207.0057444413"}}), title:'Topography' });
+                            let labeled_county_boundaries = new ol.layer.Tile({ displayInLayerSwitcher: false, visible: true, source: new ol.source.TileWMS({url:"http://102.37.157.16:8080/geoserver/WASREB/wms",params:{FORMAT:format,VERSION:"1.1.1",tiled:!0,STYLES:'admin_poly_grey',LAYERS:"WASREB:county",exceptions:"application/vnd.ogc.se_inimage",tilesOrigin:"3774876.0657275263,-521207.0057444413"}})});
+                            //let admin_poly_wms = new ol.layer.Tile({ displayInLayerSwitcher: false, visible: true, source: new ol.source.TileWMS({url:"http://102.37.157.16:8080/geoserver/WASREB/wms",params:{FORMAT:format,VERSION:"1.1.1",tiled:!0,STYLES:'admin_poly_grey',LAYERS:"WASREB:county",exceptions:"application/vnd.ogc.se_inimage",tilesOrigin:"3774876.0657275263,-521207.0057444413"}}), title:'Counties' });
+                            map.addLayer(topography_basemap);
+                            map.addLayer(kpi_wms);
+                            county_boundaries.setOpacity(0.5);
+                            map.addLayer(county_boundaries);
+                            
+                            //map.addLayer(admin_poly_wms);
+                            window.localStorage.setItem('myCat', '');
+                            // Hide water service providers layer
+                            $(".layer_list").addClass('hidden').removeClass('show');
+                            
+                            document.getElementById('legend_kpi').innerHTML = "<img  height='200' width='120' src='http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms?Service=WMS&REQUEST=GetLegendGraphic&STYLE=water_coverage&VERSION=1.0.0&FORMAT=image/png&WIDTH=50&HEIGHT=30&LAYER=kpi_wsp_v'>";
+                            document.getElementById('legend-title_kpi').innerHTML = "Water Coverage";
+                            document.getElementById('national_indicator_name').innerHTML = "Water Coverage";
+                            document.getElementById('main_title').innerHTML = "INDICATORS";
+                            $(".circle_water_coverage").addClass('show').removeClass('hidden');
+                            //Make water coverage default
+                            window.localStorage.setItem('LayerInfo', "'KPI'|'kpi_county'|'water_coverage'");
+                            $("#legend_introduction_kpi").show();
+                            $("#legend_introduction_wusa").hide();
+                            
+
+                            // On select layer toggle 
+                            $(document).on('click', '#layers-toggle', function(){
+                              
+                                $("#national_level").hide();
+                                $("#legend_kpi").hide();
+                                $("#county_level").hide();
+                                $("#legend_introduction_wusa").show();
+                                $("#legend_introduction_kpi").hide();
+
+
+                                document.getElementById('main_title').innerHTML = "LAYERS";
+
+                                //map.addLayer(county_boundaries);
+                                map.getLayers().forEach(function(layer) {
+                                    const layer_title_bridge = localStorage.getItem('layer_title_bridge');
+                                    //alert(layer_title_bridge);
+                                    //console.log("T1", layer_title_bridge,"T2", layer.get('title'));
+                                    if(layer.get('visible') && layer.get('title') != 'Topography Basemap' && layer.get('title') != 'County Boundaries')
+                                    {
+                                        console.log("LAYERS", layer.get('visible'),"LAYER NAME", layer.get('name'));
+                                    
+                                        layer.setVisible(false);
+
+                                    }
+
+
+                                });
+                                map.addLayer(county_boundaries);
+
+                            });
+                            
+                             $(document).on('click', '#kpi_list', function(){
+                                document.getElementById('main_title').innerHTML = "INDICATORS";
+                                //alert($(this).data("metering_ratio"))
+                                const LayerInfo = localStorage.getItem('LayerInfo');
+                                window.localStorage.setItem('layer_title_bridge', $(this).data("layertitle"));
+                                $(".layer_list").addClass('hidden').removeClass('show');
+
+                                map.getLayers().forEach(function(layer) {
+                                    const layer_title_bridge = localStorage.getItem('layer_title_bridge');
+                                    //alert(layer_title_bridge);
+                                    //console.log("T1", layer_title_bridge,"T2", layer.get('title'));
+                                    if(layer.get('visible') && layer.get('title') != 'County Boundaries' && layer.get('title') != 'Topography Basemap')
+                                    {
+                                        console.log("LAYERS", layer.get('visible'),"LAYER NAME", layer.get('name'));
+                                    
+                                        layer.setVisible(false);
+
+                                    }
+
+
+                                });
+
+                                
+                                let kpi_wms = new ol.layer.Tile({ displayInLayerSwitcher: false, visible: true, source: new ol.source.TileWMS({url:"http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/wms",params:{FORMAT:format,VERSION:"1.1.1",tiled:!0,STYLES:$(this).data("stylename"),LAYERS:"PUBLIC_PORTAL:"+ $(this).data("layername"),exceptions:"application/vnd.ogc.se_inimage",tilesOrigin:"3774876.0657275263,-521207.0057444413"}}), title:$(this).data("layertitle") });
+                                //alert($(this).data("layertitle"));
+                                //map.removeLayer(kpi_wms)
+                                //Add KPI layer to map  size1,size0,legendurl
+                                
+                               //window.localStorage.setItem('myCat', '');
+
+                               let added_map = map.addLayer(kpi_wms);
+                                window.localStorage.setItem('LayerInfo', "KPI|"+ $(this).data("layername")+"|"+ $(this).data("stylename")+"");
+                               
+                                //var link = document.getElementById('kpi_list');
+                                //link.click();
+                              
+                               
+                                    //    let check = window.localStorage.getItem('myCat');
+
+                                    //     if(check == '' || check == 'Tom'){
+                                    //         window.localStorage.setItem('myCat', 'Brian');
+                                    //         kpi_wms.setVisible(false);
+                                    //     } else if(check == 'Tom'){
+
+                                    //         window.localStorage.setItem('myCat', 'Brian');
+                                    //         kpi_wms.setVisible(false);
+
+                                    //     } else if(check == 'Brian'){
+
+                                    //         window.localStorage.setItem('myCat', 'Tom');
+                                    //         kpi_wms.setVisible(true);
+
+                                    //      }
+
+                                    //Hide and show 
+                                    
+                                    document.getElementById('national_indicator_name').innerHTML = $(this).data("layertitle").replaceAll('_', ' ');
+                                    
+                                    if($(this).data("layertitle") == 'water_coverage')
+                                    {
+
+                                        $(".water_coverage").addClass('show').removeClass('hidden');
+                                        $(".nrw").addClass('hidden').removeClass('show');
+                                        $(".metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".staff_productivity").addClass('hidden').removeClass('show');
+
+                                        $(".circle_water_coverage").addClass('show').removeClass('hidden');
+                                        $(".circle_non_revenue").addClass('hidden').removeClass('show');
+                                        $(".circle_metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".circle_staff_productivity").addClass('hidden').removeClass('show');
+                                   
+                                    } else if($(this).data("layertitle") == 'non_revenue_water')
+                                    {
+
+                                        $(".water_coverage").addClass('hidden').removeClass('show');
+                                        $(".nrw").addClass('show').removeClass('hidden');
+                                        $(".metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".staff_productivity").addClass('hidden').removeClass('show');
+
+                                        $(".circle_water_coverage").addClass('hidden').removeClass('show');
+                                        $(".circle_non_revenue").addClass('show').removeClass('hidden');
+                                        $(".circle_metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".circle_staff_productivity").addClass('hidden').removeClass('show');
+
+                                        
+                                        
+                                    }else if($(this).data("layertitle") == 'metering_ratio')
+                                    {
+                                        $(".metering_ratio").addClass('show').removeClass('hidden');
+                                        $(".water_coverage").addClass('hidden').removeClass('show');
+                                        $(".nrw").addClass('hidden').removeClass('show');
+                                        $(".staff_productivity").addClass('hidden').removeClass('show');
+
+                                        $(".circle_water_coverage").addClass('hidden').removeClass('show');
+                                        $(".circle_non_revenue").addClass('hidden').removeClass('show');
+                                        $(".circle_metering_ratio").addClass('show').removeClass('hidden');
+                                        $(".circle_staff_productivity").addClass('hidden').removeClass('show');
+
+                                    }else if($(this).data("layertitle") == 'staff_productivity')
+                                    {
+                                        $(".metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".water_coverage").addClass('hidden').removeClass('show');
+                                        $(".nrw").addClass('hidden').removeClass('show');
+                                        $(".staff_productivity").addClass('show').removeClass('hidden');
+
+                                        $(".circle_water_coverage").addClass('hidden').removeClass('show');
+                                        $(".circle_non_revenue").addClass('hidden').removeClass('show');
+                                        $(".circle_metering_ratio").addClass('hidden').removeClass('show');
+                                        $(".circle_staff_productivity").addClass('show').removeClass('hidden');
+
+                                    }
+                                
+                                   document.getElementById('legend_kpi').innerHTML = "<img  height='200' width='120' src='"+ $(this).data("legendurl") +"'>";
+                                   document.getElementById('legend-title_kpi').innerHTML = ""+ $(this).data("layertitle").replaceAll('_', ' ') +"";
+
+                             });
+                       
+                           async function get_kpi_array(){
+
+                            
+
+                           await fetch("http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=wms&version=1.1.1&request=GetCapabilities")
+                            .then(function(response) {
+                                return response.text();
+                            }).then(function(text) {
+
+                                    var parser = new ol.format.WMSCapabilities();
+
+                                    var result = parser.read(text);
+                                    var layers = result.Capability.Layer.Layer;
+                                    //console.log("WATER_UTILITIES", layers);
+                                    //get_water_utilities_service_area(layers)
+                                    return layers;
+                                }).then(function(layers) {
+                                //console.log("LAYERSS", layers)
+                                //stored_layer = layers;
+                                window.localStorage.setItem('performance_indicators', JSON.stringify(layers));
+                                let performance_indicators = [];
+                                var container = $("#indicator_title_below");
+                                
+                                
+                                let icons;
+
+                                for (var i = 0; i < layers.length; i++) {
+
+                                    let style = layers[i].Style;
+                                    //let name = "John Doe";
+                                    //console.log("Title " + layers[i].Title,"Name " + layers[i].Name, "STYLE", layers[i].Style[0].Name, "LegendURL", layers[i].Style[0].LegendURL[0].OnlineResource);
+                                    
+                                    container.append('<h5 class="text-bold text-center"><b>'+ layers[i].Title.replaceAll('_', ' ') +'</b></h5><br>');
+                                    for (var w = 0; w < style.length; w++) {
+                                        
+                                        console.log("Name",style[w]);
+
+                                        if(style[w].Title == 'non_revenue_water'){
+                                            icons = './img/icons/non-revenue-06.svg';
+                                        } else if (style[w].Title == 'staff_productivity'){
+                                            icons = './img/icons/staff-productivity-03.svg';
+                                        } else if(style[w].Title == 'metering_ratio')
+                                        {
+                                            icons = './img/icons/metering-ratio-02.svg';
+                                        } else if(style[w].Title == 'water_coverage')
+                                        {
+                                            icons = './img/icons/drinking-water-01.svg';
+                                        }
+                                        
+                                        console.log("Layersss  "+ layers[i].Name +"",style[w].Title);
+                                        // <p>92</p> <div class="metric-element bg-red-500"></div>
+                                        if(style[w].Title != 'staff_productivity'){
+                                            container.append('<div id="kpi_list" data-size1="'+ style[w].LegendURL[0].size[1] +'" data-size0="'+ style[w].LegendURL[0].size[0] +'" data-legendurl="'+ style[w].LegendURL[0].OnlineResource +'" data-layertitle="'+ style[w].Title +'" data-stylename="'+ style[w].Name +'" data-layername="'+ layers[i].Name +'" class="metric-container"> <div class="metric-element border border-slate-300"> <img src="'+ icons +'" class="h-4 w-4 mx-auto"> </div> <div class="flex flex-col justify-center"> <p class="metric-label text-xs">'+ style[w].Title.replaceAll('_', ' ') +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> </div></div>'); 
+                                        }
+                                       
+                                   
+                                        
+                                    }
+                                    
+
+                                    //for (var w = 0; w < layers[i].Style.length; i++) {
+
+
+                                   // }
+
+
+
+                                    //water_services_utilities_layers.push()
+
+                                    // map.addLayer(new ol.layer.Tile({
+                                    //     visible: false,
+                                    //     source: new ol.source.TileWMS({
+                                    //         url: "http://102.37.157.16:8080/geoserver/WASREB/wms",
+                                    //         params: {
+                                    //             FORMAT: format,
+                                    //             VERSION: "1.1.1",
+                                    //             tiled: !0,
+                                    //             STYLES: layers[i].Style[0].Name,
+                                    //             LAYERS: "PUBLIC_PORTAL:" + layers[i].Name,
+                                    //             exceptions: "application/vnd.ogc.se_inimage",
+                                    //             tilesOrigin: "3774876.0657275263,-521207.0057444413"
+                                    //         }
+                                    //     }),
+                                    //     title: layers[i].Title
+                                    // }));
+
+                                    // console.log("Performance", layers[i].Style.length);
+                                    // //$("#indicator_title_below" ).html(layers[i].Title);
+                                    // //container.append('<h5 class="text-center">'+ layers[i].Title +'</h5>');
+                                    // //
+                                    
+                                    // for (var w = 0; w < layers[i].Style.length; i++) {
+
+                                    //     console.log(layers[i].Style[w].Title);
+
+                                    //     //container.append('<div class="metric-container"> <div class="metric-element border border-slate-300"> <img src="./img/icons/drinking-water-01.svg" class="h-4 w-4 mx-auto"> </div> <div class="flex flex-col justify-center"> <p class="metric-label text-xs">Drinking water quality %</p> </div> <div class="metric-element bg-red-500"> <p>92</p> </div> </div>'); 
+
+                                    // }
+
+
+                                  }
+
+                                 //return performance_indicators;
+
+
+
+
+                                }).then(function(water_services_utilities_layers) {
+
+                                //console.log("LAYERSS", water_services_utilities_layers);
+
+                                //map.addLayer([water_services_utilities_layers]);
+
+                                });
+
+                        }
+
+                        
+                        async function get_water_service_area_utilities_array(){
+
+                            await fetch("http://102.37.157.16:8080/geoserver/WASREB/ows?service=wms&version=1.1.1&request=GetCapabilities")
+                            .then(function(response) {
+                                return response.text();
+                            }).then(function(text) {
+
+                                var parser = new ol.format.WMSCapabilities();
+
+                                var result = parser.read(text);
+                                var layers = result.Capability.Layer.Layer;
+                                //console.log("WATER_UTILITIES", layers);
+                                 //get_water_utilities_service_area(layers)
+                                 return layers;
+                             }).then(function(layers) {
+                                  //console.log("LAYERSS", layers)
+                                  //stored_layer = layers;
+                                  window.localStorage.setItem('water_utilities_service_area', JSON.stringify(layers));
+                                  let water_services_utilities_layers = [];
+                                  for (var i = 0; i < layers.length; i++) {
+                                        //let name = "John Doe";
+                                        //console.log("Title " + layers[i].Title,"Name " + layers[i].Name, "STYLE", layers[i].Style[0].Name, "LegendURL", layers[i].Style[0].LegendURL[0].OnlineResource);
+                                    
+                                        //water_services_utilities_layers.push()
+                                   
+                                        map.addLayer(new ol.layer.Tile({ zIndex: 9, visible: false, source: new ol.source.TileWMS({url:"http://102.37.157.16:8080/geoserver/WASREB/wms",params:{FORMAT:format,VERSION:"1.1.1",tiled:!0,STYLES:layers[i].Style[0].Name,LAYERS:"PUBLIC_PORTAL:"+ layers[i].Name,exceptions:"application/vnd.ogc.se_inimage",tilesOrigin:"3774876.0657275263,-521207.0057444413"}}), title:layers[i].Title }));
+
+                                    }
+
+                                   return water_services_utilities_layers;
+
+                                   
+
+
+                             }).then(function(water_services_utilities_layers) {
+
+                                   //console.log("LAYERSS", water_services_utilities_layers);
+
+                                   //map.addLayer([water_services_utilities_layers]);
+
+                             });
+
+                            //map.addLayer(osmLayer)
+
+                         }
+
+                         map.on('pointermove', function(evt) { 
+                            //alert("Show me");
+                            $("#legend_introduction").hide();
+                            displayTooltip
+                            const map_clicked = window.localStorage.getItem('map_clicked');
+                            if(map_clicked == 'on'){
+
+                                //alert("Show me");
+
+                                const wusa_layers = map.getLayerGroup().getLayers().getArray();
+                                for (let f = 0; f < wusa_layers.length; f++) { 
+
+                                     let wusa_each_layer =  wusa_layers[f];
+                                     
+
+                                     if(wusa_each_layer.get('visible') && wusa_each_layer.get('title') != 'Topography Basemap' && wusa_each_layer.get('title') != 'County Boundaries'){
+
+                                        var url = wusa_each_layer.getSource().getFeatureInfoUrl(
+                                                    evt.coordinate, viewResolution, viewProjection,
+                                                                    {'INFO_FORMAT': 'application/json'});
+
+                                        $.ajax({url: url, dataType: 'json', success:function(response) {  
+                                                        
+                                            var result = response;
+                                            if(result.features.length != 0){
+                                                  //map.getView().setZoom(8);
+                                                 console.log("Resutlts Features", result.features[0].properties);
+                                                
+                                                 $("#wusa_attribute_info").html(result.features[0].properties);
+                                                 
+                                                 const myObj = JSON.parse(JSON.stringify(result.features[0].properties));
+                                                    let text = "<div style='margin-right:30px !important;'><h5>"+ wusa_each_layer.get('title') +"</h5><br><table id='layer_info_table' class='text-left' style='margin-left: 10px !important;; font-size:12px!important;'>"
+                                                    for (let x in myObj) {
+                                                        console.log(myObj[x]);
+                                                        if(myObj[x] != 'null'){
+                                                            text += "<tr><td style='padding: 4; margin:4;'>"+ x +"</td><td style='padding: 4; margin:4;'>" + myObj[x] + "</td></tr>";
+                                                        }
+                                                     }
+                                                    text += "</table></div>"    
+                                                    document.getElementById("wusa_info_box").innerHTML = text;
+
+                                                    $("#county_level").show();
+
+                                                    const LayerInfo = localStorage.getItem('LayerInfo').split("|");
+                                                    
+                                                    if(LayerInfo[0] == "'KPI'" || LayerInfo[0] == "KPI"){
+
+                                                        document.getElementById("tooltip_county").innerHTML = '<b>County:</b> '+ result.features[0].properties.name +'';
+
+                                                        if(LayerInfo[2] == "'water_coverage'" || LayerInfo[2] == "water_coverage"){
+
+                                                            document.getElementById("tooltip_kpi").innerHTML = '<b>Water Coverage:</b> '+ result.features[0].properties.water_coverage +'';
+
+                                                        } else if(LayerInfo[2] == "'non_revenue_water'" ||LayerInfo[2] == "non_revenue_water"){
+
+                                                            document.getElementById("tooltip_kpi").innerHTML = '<b>Non Revenue Water:</b> '+ result.features[0].properties.nrw +'';
+
+                                                        }
+                                                        else if(LayerInfo[2] == "'metering_ration'" || LayerInfo[2] == "metering_ratio"){
+
+                                                           document.getElementById("tooltip_kpi").innerHTML = '<b>Metering Ratio:</b> '+ result.features[0].properties.metering_ration +'';
+
+                                                        }
+                                                        else if(LayerInfo[2] == "'staff_productivity'" || LayerInfo[2] == "staff_productivity"){
+
+                                                          document.getElementById("tooltip_kpi").innerHTML = '<b>Staff Productivity:</b> '+ result.features[0].properties.staff_productivity +'';
+
+                                                        }
+
+                                                    }
+
+
+
+
+
+                                                    
+                                            }
+                                        }});             
+                                     }
+
+
+
+
+                                }
+
+                             }
+
+
+                         });
+                           //singleclick
+                         map.on('singleclick', function(evt) { 
+                                
+                                window.localStorage.setItem('map_clicked', 'on');
+                                //Hide Later List DIV 
+                                //$(".all_layers").addClass('show').removeClass('hidden');
+                                //$("#county_level").hide();
+                                $("#legend_introduction").hide();
+
+                                //Zoom to county
+
+                                const LayerInfo = window.localStorage.getItem('LayerInfo');
+                                 const LayerInfoSplit = LayerInfo.split("|");
+
+                                 console.log("LayerInfo", LayerInfoSplit[2]);
+                                 
+
+                                let feature = map.forEachFeatureAtPixel (evt.pixel, function (feature) {return feature;});
+                                
+                                map.getView().fit(feature.getGeometry())
+                                map.getView().setZoom(9);
+
+                                 
+
+                                //var change_county_style = '';
+
+                                var change_county_style = new ol.style.Style({
+                                                stroke: new ol.style.Stroke({
+                                                color: '#E43F32',
+                                                width: 3,
+                                                opacity: 1.0
+                                                }),
+                                                fill: new ol.style.Fill({
+                                                color: [245, 141, 66]
+                                                }),
+                                                zIndex: 1
+                                                
+                                });
+
+                                // const wusa_layers = map.getLayerGroup().getLayers().getArray();
+                                // for (let f = 0; f < wusa_layers.length; f++) { 
+
+                                //      let wusa_each_layer =  wusa_layers[f];
+                                     
+
+                                //      if(wusa_each_layer.get('visible') && wusa_each_layer.get('title') != 'Topography Basemap' && wusa_each_layer.get('title') != 'County Boundaries'){
+
+                                //         var url = wusa_each_layer.getSource().getFeatureInfoUrl(
+                                //                     evt.coordinate, viewResolution, viewProjection,
+                                //                                     {'INFO_FORMAT': 'application/json'});
+
+                                //         $.ajax({url: url, dataType: 'json', success:function(response) {  
+                                                        
+                                //             var result = response;
+                                //             if(result.features.length != 0){
+                                                  
+                                //                  console.log("Resutlts Features", result.features[0].properties);
+                                                
+                                //             }
+                                //         }});             
+                                //      }
+
+
+
+
+                                // }
+                                //console.log("Roots", wusa_layers);
+                                
+                               // feature.setStyle(change_county_style);
+
+
+
+
+
+
+                            });
+
+                         lswitcher.on('select', function(e) {
+                                
+                               // Hide indicators
+                               $("#national_level").hide();
+                                $("#county_level").hide();
+                                $("#legend_kpi").hide();
+                                //map.addLayer(labeled_county_boundaries);
+                                document.getElementById("wusa_info_box").innerHTML = '';
+
+                                $("#legend_introduction_wusa").show();
+                                $("#legend_introduction_kpi").hide();
+
+                                
+
+                                let selected_layer = e.layer;
+                                //console.log("Layer", e.layer.get('title'));
+
+                                document.getElementById('main_title').innerHTML = "MAP LAYERS";
+                            
+                                const water_utilities_service_area = window.localStorage.getItem('water_utilities_service_area');
+      
+                                //console.log("Stored array", );
+                                let wusa_array = JSON.parse(water_utilities_service_area);
+                                
+                                let filtered_capabilities = wusa_array.find(item => {
+                                     return item.Title == ''+ e.layer.get('title') +''
+                                 })
+
+                                 console.log("Capabilities", filtered_capabilities.Name);
+                                 document.getElementById('legend').innerHTML = "<img  height='"+ filtered_capabilities.Style[0].LegendURL[0].size[0] +"' width='"+ filtered_capabilities.Style[0].LegendURL[0].size[1] +"' src='"+ filtered_capabilities.Style[0].LegendURL[0].OnlineResource +"'>";
+                                 document.getElementById('legend-title').innerHTML = ""+ e.layer.get('title') +"";
+                                     
+                                 const LayerInfo = window.localStorage.getItem('LayerInfo');
+                                 const LayerInfoSplit = LayerInfo.split("|");
+
+                                 console.log("LayerInfo", LayerInfoSplit[2]);
+                                 if(LayerInfoSplit[0] == 'KPI'){
+
+                                     map.getLayers().forEach(function(layer) {
+
+                                     //console.log("Layer Title", layer.get('title'));
+                                   
+                                     if(layer.get('visible') && LayerInfoSplit[2] == layer.get('title'))
+                                     {
+                                        console.log("LAYERS", LayerInfoSplit[2],"LAYER NAME", layer.get('Title'));
+                                        layer.setVisible(false);
+
+                                     }
+                                  });
+                                 }
+                            });
+                       
+                        get_analytics_geojson();
+
+                        async function get_analytics_geojson(){
+
+                            let res = await axios.get('http://102.37.157.16:8080/geoserver/PUBLIC_PORTAL/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=PUBLIC_PORTAL%3Akpi_county&maxFeatures=2350&outputFormat=application%2Fjson');  
+                            const all_indicators = JSON.parse(JSON.stringify(res.data.features));
+
+                            let sum_ps = 0;
+                            let sum_psa = 0;
+                            let wp = 0;
+                            let bv = 0;
+                            let nac = 0;
+                            let ntc = 0;
+
+                            let awc = 0;
+                            let nmc = 0;
+
+
+                            for (let i = 0; i < all_indicators.length; i++) {
+                                const pop_served = all_indicators[i].properties.population_served;
+                                const pop_service_area = all_indicators[i].properties.population_service_area;
+
+                                const water_produced = all_indicators[i].properties.water_produced;
+                                const billed_volume = all_indicators[i].properties.billed_volume;
+
+                                const active_connections = all_indicators[i].properties.active_connections;
+                                const staff_total = all_indicators[i].properties.staff_total;
+
+                                const active_water_connections = all_indicators[i].properties.active_water_connections;
+                                const metered_connections = all_indicators[i].properties.metered_connections;
+
+                            //Water coverge
+                                sum_ps += pop_served;
+                                sum_psa += pop_service_area;
+
+                                //Non Revenue Water
+                                wp += water_produced;
+                                bv += billed_volume;
+
+                                //Staff productivity
+                                nac += active_connections;
+                                ntc += staff_total;
+
+                                //Metering Ratio
+                                awc += active_water_connections;
+                                nmc += metered_connections;
+
+                            }
+                        
+                            let national_water_coverage = ((sum_ps/sum_psa) * 100).toFixed(0);
+                            let non_revenue_water = (((wp-bv)/wp) * 100).toFixed(0);
+                            let staff_productivity = ((ntc/nac) * 1000).toFixed(0);
+                            let metering_ratio = (((nmc/awc)) * 100).toFixed(0);
+
+                            $('#national_wc').html(national_water_coverage);
+                            $('#national_nrw').html(non_revenue_water);
+                            $('#national_metering_ratio').html(metering_ratio);
+                            $('#population_served').html(sum_ps.toLocaleString());
+                            $('#population_service_area').html(sum_psa.toLocaleString());
+                            $('#active_water_connections').html(awc.toLocaleString());
+                            $('#water_produced').html(wp.toLocaleString());
+
+                            $('#national_legend_title').hide();
+                            
+                            console.log("Natioanl", nmc);
+                            //$("#county_level").hide();
+                        // $('#myTable tbody').append('<tr class ="table_class" id="table_id" data-name="' + name + '"><td>XXXX</td></tr>');
+                        //$('#water_coverage').append('<div data-end-value="' + national_water_coverage + '" class="circular-progress circular-progress-small mx-auto"><div class="value-container value-container-small text-slate-600">0%</div></div>');
+                        // $("#water_coverage").data-end("92", national_water_coverage);
+
+                        //var startTime = national_water_coverage.getAttribute('data-end-value');
+                        // var startTime = $('.water_coverage').getAttribute('data-end-value');
+                        // console.log("Startr",startTime)
+
+
+                        //const element = document.querySelector("#water_coverage");
+                    //  delete element.dataset.attributeName;
+
+                          const t = '67';
+                       //  $("#water_coverage_analytics").attr("data-end-value", t); 
+                         // console.log("Jujuuu",$("#water_coverage_analytics").data("end-value"));
+
+                         
+
+                        
+                        }
+
+
+                        var popup = new ol.Overlay({ element: document.getElementById('popup')});
+
+                        
+                         map.on('pointermove', function(evt) {
+
+                                
+
+                                // const root = map.getLayerGroup();
+                                
+                                // const water_utilities_service_area = root.getLayers().item(1);
+                                // const performance_indicators_analytics = root.getLayers().item(3);
+                                // const wsp_performance_indicators_analytics = root.getLayers().item(2);
+
+                                // //console.log("Point Move", performance_indicators_analytics);
+
+                                // for (let f = 0; f < wsp_performance_indicators_analytics.getLayers().getArray().length; f++) { 
+                                    
+                                //     let pia =  wsp_performance_indicators_analytics.getLayers().item(f);
+                                //     console.log("PIA PIS", pia);
+                                //         if(pia.get('visible')){
+
+                                             
+
+                                //         }
+
+                                // }
+
+                            });
+
+                        
+                            $("#nrw").hide();
+                            $("#water_coverage").hide();
+                            $("#nrw_county").hide();
+                            $("#metering_ratio_county").hide();
+                            $("#water_coverage_county").hide();  
+                            $("#water_coverage_stats").hide();
+                            $("#metering_ratio_stats").hide();
+                            $("#non_revenue_county").hide();
+                            $("#non_revenue_stats").hide();
+
+                        
+                            //class="form-control" style="margin-bottom:20px !important;"
+                            map.addControl(lswitcher);
+
+                            // The serach input
+                            var search = $('<input id="main-search" class="form-control" style="color:#293445; margin-bottom:0px !important;">').attr('placeholder','Type To Filter..e.g Water Coverage');
+                            function filterLayers(rex, layers) {
+                            
+                            var found = false;
+                            layers.forEach(function(l){
+                                // Layer Group
+                                if (l.getLayers) {
+                                if (filterLayers(rex, l.getLayers().getArray())) {
+                                    l.set('noLayer', false);
+                                    found = true;
+                                } else {
+                                    //l.set('noLayer', true);
+                                }
+                                } else {
+                                if (rex.test(l.get('title'))) {
+                                    l.setVisible(true);
+                                    found = true;
+                                } else {
+                                    l.setVisible(false);
+                                }
+                                }
+                               });
+                               return found;
+                            }
+
+                            search.on('keyup change', function(){
+                            var rex = new RegExp(search.val());
+                            filterLayers(rex, layers);
+                            // Force layer switcher redraw
+                            //layers[0].changed();
+                            });
+
+                            // Add search input in the switcher header
+                            lswitcher.setHeader(search.get(0));
+
+                            lswitcher.on('toggle', function(e) {
+
+                                const performance_indicators_analytics = root.getLayers().item(3);
+                               
+
+                            });
+                            //
+
+                            // When switcher is drawn hide/show the list item according to its visility
+                            lswitcher.on('drawlist', function(e) {
+                                
+                            // console.log("E layers", e.layer);
+                            // Hide Layer Group with no layers visible
+                            if (e.layer.get('noLayer')) {
+                                if (e.layer.get('noLayer')) {
+                              //  $(e.li).hide();
+                                } else {
+                               // $(e.li).show();
+                                }
+                            } else {
+                                var rex = new RegExp(search.val());
+                                if (rex.test(e.layer.get('title'))) {
+                                $(e.li).show();
+                                } else {
+                                $(e.li).hide();
+                                }
+                            }
+                            });
+
+                        
                     </script>
 
                         <script type="module">
